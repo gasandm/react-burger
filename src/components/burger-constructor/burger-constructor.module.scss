@@ -1,0 +1,57 @@
+.bConstrBlock {
+    position        : absolute;
+    width           : 600px;
+    height          : 790px;
+    left            : 640px;
+    top             : 60px;
+    background-color: #131316;
+
+    .topBottom {
+        margin-left: 24px;
+    }
+
+
+    .ingridientsList {
+        overflow-x   : auto;
+        height       : 440px;
+        margin-top   : 10px;
+        margin-bottom: 10px;
+    }
+
+    .priceTotal {
+        width      : 65%;
+        height     : 63px;
+        float      : right;
+        margin-top : 40px;
+        display    : flex;
+        align-items: center;
+
+        .price {
+            font-size   : 48px;
+            font-family : "Iceland";
+            display     : inline;
+            margin-right: 40px;
+            display     : flex;
+            align-items : center;
+        }
+
+        svg {
+            width : 33px;
+            height: 33px;
+        }
+    }
+
+    .ingridientsList::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .ingridientsList::-webkit-scrollbar-track {
+        background: #2F2F37;
+    }
+
+    .ingridientsList::-webkit-scrollbar-thumb {
+        background-color: #8585AD;
+    }
+
+
+}
