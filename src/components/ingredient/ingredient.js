@@ -1,0 +1,29 @@
+import React from "react";
+import PropTypes from 'prop-types';
+import styles from "./ingredient.module.scss";
+import {
+    CurrencyIcon,
+    Counter,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+
+const Ingredient = (props) => {
+    const { _id, image, price, name } = props.item;
+
+    return (
+        <div key={_id} className={styles.ingridient}>
+            <div className={styles.counter}>
+                <Counter count={1} size="default" />
+            </div>
+            <img src={image} alt={name} />
+            <div className={styles.priceWrapper}>
+                <span className="mr-5">{price}</span>
+                <CurrencyIcon type="primary" />
+            </div>
+            <p className="text text_type_main-default">{name}</p>
+        </div>
+    );
+};
+
+Ingredient.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
+
+export default Ingredient;

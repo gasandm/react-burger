@@ -1,57 +1,60 @@
-.bConstrBlock {
-    position        : absolute;
-    width           : 600px;
-    height          : 790px;
-    left            : 640px;
-    top             : 60px;
+.constructorBlock {
+    position: absolute;
+    width: 600px;
+    height: 790px;
+    left: 640px;
+    top: 60px;
     background-color: #131316;
 
     .topBottom {
         margin-left: 24px;
     }
 
-
-    .ingridientsList {
-        overflow-x   : auto;
-        height       : 440px;
-        margin-top   : 10px;
+    .ingredientsList {
+        overflow-x: auto;
+        height: 440px;
+        margin-top: 10px;
         margin-bottom: 10px;
     }
 
+    .ingredientsListInner {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .priceTotal {
-        width      : 65%;
-        height     : 63px;
-        float      : right;
-        margin-top : 40px;
-        display    : flex;
+        width: 65%;
+        height: 63px;
+        float: right;
+        margin-top: 40px;
+        display: flex;
         align-items: center;
 
         .price {
-            font-size   : 48px;
-            font-family : "Iceland";
-            display     : inline;
+            font-size: 48px;
+            font-family: "Iceland";
+            display: inline;
             margin-right: 40px;
-            display     : flex;
-            align-items : center;
+            display: flex;
+            align-items: center;
         }
 
         svg {
-            width : 33px;
+            width: 33px;
             height: 33px;
         }
     }
 
-    .ingridientsList::-webkit-scrollbar {
+    .ingredientsList::-webkit-scrollbar {
         width: 8px;
     }
 
-    .ingridientsList::-webkit-scrollbar-track {
-        background: #2F2F37;
+    .ingredientsList::-webkit-scrollbar-track {
+        background: #2f2f37;
     }
 
-    .ingridientsList::-webkit-scrollbar-thumb {
-        background-color: #8585AD;
+    .ingredientsList::-webkit-scrollbar-thumb {
+        background-color: #8585ad;
     }
-
-
 }
