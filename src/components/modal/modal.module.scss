@@ -1,0 +1,21 @@
+.closeButton {
+    float: right;
+    position: relative;
+    cursor: pointer;
+}
+.modal {
+    position: relative;
+    width: 720px;
+    height: 718px;
+    opacity: 1;
+    background-color: #131316;
+    border-radius: 40px;
+    border: 1px solid rgba(76, 76, 255, 0.2);
+}
+.details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 640px;
+    height: 64px;
+}

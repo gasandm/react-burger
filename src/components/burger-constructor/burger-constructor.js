@@ -7,12 +7,20 @@ import {
     CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.scss";
+import OrderAccepted from "../order-accepted/order-accepted";
 
 const BurgerConstructor = (props) => {
     const bun = props.data.find((item) => item.type === "bun");
 
+    const[isOrderAcceptedActive, setIsOrderAcceptedActive] = React.useState(false);
+
+    function toggleOrderAccepted() {
+        setIsOrderAcceptedActive(!isOrderAcceptedActive);
+    }
+
     return (
         <section className={styles.constructorBlock}>
+            {isOrderAcceptedActive && <OrderAccepted toggleOrderAccepted={toggleOrderAccepted}/>}
             <div className="ml-15">
                 <div className={styles.topBottom}>
                     <ConstructorElement
@@ -61,14 +69,12 @@ const BurgerConstructor = (props) => {
                     <span className="mr-5">610</span>
                     <CurrencyIcon type="primary" />
                 </div>
-
-                <Button type="primary" size="large">
+                <Button onClick={toggleOrderAccepted} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
         </section>
     );
-
 };
 
 BurgerConstructor.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };

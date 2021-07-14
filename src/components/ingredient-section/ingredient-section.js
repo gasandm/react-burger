@@ -12,7 +12,7 @@ const IngredientSection = (props) => {
                 {props.data.map((item) => {
                     if (item.type === props.tab.id) {
                         return (
-                            <Ingredient key={item._id} item={item} />
+                            <Ingredient toggleDetails={props.toggleDetails} key={item._id} item={item} />
                         )
                     }
                 })}
@@ -21,6 +21,9 @@ const IngredientSection = (props) => {
     );
 };
 
-IngredientSection.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
+IngredientSection.propTypes = { 
+    data: PropTypes.arrayOf(PropTypes.object),
+    tab: PropTypes.object
+};
 
 export default IngredientSection;

@@ -10,7 +10,7 @@ const Ingredient = (props) => {
     const { _id, image, price, name } = props.item;
 
     return (
-        <div key={_id} className={styles.ingridient}>
+        <div key={_id} onClick={() => props.toggleDetails(props.item)} className={styles.ingridient}>
             <div className={styles.counter}>
                 <Counter count={1} size="default" />
             </div>
@@ -24,6 +24,9 @@ const Ingredient = (props) => {
     );
 };
 
-Ingredient.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
+Ingredient.propTypes = { 
+    toggleDetails: PropTypes.func,
+    item: PropTypes.object
+};
 
 export default Ingredient;

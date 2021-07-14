@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.scss";
 
-const AppHeader = (props) => {
+const AppHeader = () => {
     return (
         <header>
             <nav className="p-6">
