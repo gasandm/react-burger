@@ -1,0 +1,29 @@
+.ingredientsBlock {
+    position: absolute;
+    width: 600px;
+    height: 812px;
+    top: 65px;
+
+    .ingredients::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .ingredients::-webkit-scrollbar-track {
+        background: #2f2f37;
+    }
+
+    .ingredients::-webkit-scrollbar-thumb {
+        background-color: #8585ad;
+    }
+}
+
+.ingredients {
+    width: 600px;
+    height: 688px;
+    overflow-x: auto;
+
+    span {
+        display: block;
+        font-size: 28px;
+    }
+}

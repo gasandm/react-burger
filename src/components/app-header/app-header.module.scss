@@ -1,0 +1,38 @@
+header {
+    width: 100%;
+    background-color: #1c1c21;
+
+    nav {
+        display: flex;
+        justify-content: space-around;
+        max-width: 1300px;
+        margin: 0 auto;
+        position: relative;
+
+        span {
+            font-size: 14px;
+            position: relative;
+            bottom: 6px;
+        }
+    }
+}
+
+.navElement {
+    position: relative;
+    cursor: pointer;
+    top: 12px;
+}
+
+.logo {
+    margin-right: 200px;
+    position: relative;
+    top: 0px;
+    cursor: pointer;
+}
+
+.navUl {
+    display: contents;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

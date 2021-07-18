@@ -1,0 +1,60 @@
+.constructorBlock {
+    position: absolute;
+    width: 600px;
+    height: 790px;
+    left: 640px;
+    top: 60px;
+    background-color: #131316;
+
+    .topBottom {
+        margin-left: 24px;
+    }
+
+    .ingredientsList {
+        overflow-x: auto;
+        height: 440px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .ingredientsListInner {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .priceTotal {
+        width: 65%;
+        height: 63px;
+        float: right;
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+
+        .price {
+            font-size: 48px;
+            font-family: "Iceland";
+            display: inline;
+            margin-right: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        svg {
+            width: 33px;
+            height: 33px;
+        }
+    }
+
+    .ingredientsList::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .ingredientsList::-webkit-scrollbar-track {
+        background: #2f2f37;
+    }
+
+    .ingredientsList::-webkit-scrollbar-thumb {
+        background-color: #8585ad;
+    }
+}
