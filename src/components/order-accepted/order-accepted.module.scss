@@ -1,81 +1,27 @@
-.closeButton {
-    float: right;
-    position: relative;
-    top: 60px;
-    right: 40px;
-}
-
-.orderAcceptedMain {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-}
-
-.modal {
-    position: relative;
-    width: 720px;
-    height: 718px;
-    opacity: 1;
-    background-color: #131316;
-    border-radius: 40px;
-    border: 1px solid rgba(76, 76, 255, 0.2);
-}
-
 .orderNumber {
-    display: block;
-    position: absolute;
-    width: 520px;
-    height: 120px;
-    left: 100px;
-    top: 120px;
     font-family: "Iceland";
     font-size: 140px;
-    text-align: center;
     line-height: 0.9em;
+    display: block;
+    margin-top: 16px;
 }
-
 .orderId {
     display: block;
-    position: absolute;
-    width: 520px;
-    height: 30px;
-    left: 100px;
-    top: 272px;
     font-size: 28px;
-    text-align: center;
+    margin-top: 32px;
 }
-
 .doneLogo {
-    position: absolute;
-    width: 120px;
     height: 120px;
-    left: 300px;
-    top: 362px;
+    margin-top: 60px;
 }
-
 .orderStartInfo {
-    position: absolute;
-    width: 520px;
-    height: 24px;
-    left: 100px;
-    top: 542px;
+    display: block;
     font-size: 16px;
-    text-align: center;
+    margin-top: 60px;
 }
-
 .orderPlaceInfo {
-    position: absolute;
-    width: 520px;
-    height: 24px;
-    left: 100px;
-    top: 574px;
     font-size: 16px;
-    text-align: center;
     color: #8585AD;
+    margin-top: 8px;
+    display: block;
 }

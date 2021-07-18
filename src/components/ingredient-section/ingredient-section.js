@@ -7,12 +7,12 @@ const IngredientSection = (props) => {
 
     return (
         <>
-            <span className="text text_type_main-default mb-25">{props.tab.title}</span>
+            <span className={`${styles.sectionTitle} text text_type_main-default mb-25`}>{props.tab.title}</span>
             <div className={styles.shortList}>
                 {props.data.map((item) => {
                     if (item.type === props.tab.id) {
                         return (
-                            <Ingredient key={item._id} item={item} />
+                            <Ingredient toggleDetails={props.toggleDetails} key={item._id} item={item} />
                         )
                     }
                 })}
@@ -21,6 +21,9 @@ const IngredientSection = (props) => {
     );
 };
 
-IngredientSection.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
+IngredientSection.propTypes = { 
+    data: PropTypes.arrayOf(PropTypes.object),
+    tab: PropTypes.object
+};
 
 export default IngredientSection;

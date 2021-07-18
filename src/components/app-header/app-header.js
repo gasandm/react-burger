@@ -7,16 +7,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.scss";
 
-const AppHeader = (props) => {
+const AppHeader = () => {
     return (
-        <header>
-            <nav className="p-6">
+        <header className={styles.topHeader}>
+            <nav className={`${styles.mainNav} p-6`}>
                 <ul className={styles.navUl}>
                     <li className={styles.navElement}>
                         <div className="d-ib">
                             <BurgerIcon type="primary" />
                         </div>
-                        <span className="text text_type_main-default ml-2">
+                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
                             Конструктор
                         </span>
                     </li>
@@ -24,7 +24,7 @@ const AppHeader = (props) => {
                         <div className="d-ib">
                             <ListIcon type="primary" />
                         </div>
-                        <span className="text text_type_main-default ml-2">
+                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
                             Лента заказов
                         </span>
                     </li>
@@ -35,7 +35,7 @@ const AppHeader = (props) => {
                         <div className="d-ib">
                             <ProfileIcon type="primary" />
                         </div>
-                        <span className="text text_type_main-default ml-2">
+                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
                             Личный кабинет
                         </span>
                     </li>

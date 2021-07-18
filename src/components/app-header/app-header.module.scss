@@ -1,15 +1,15 @@
-header {
+.topHeader {
     width: 100%;
     background-color: #1c1c21;
 
-    nav {
+    .mainNav {
         display: flex;
         justify-content: space-around;
         max-width: 1300px;
         margin: 0 auto;
         position: relative;
 
-        span {
+        .topTitle {
             font-size: 14px;
             position: relative;
             bottom: 6px;
