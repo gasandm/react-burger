@@ -10,16 +10,16 @@ const Ingredient = (props) => {
     const { _id, image, price, name } = props.item;
 
     return (
-        <div key={_id} onClick={() => props.toggleDetails(props.item)} className={styles.ingridient}>
+        <div key={_id} onClick={() => props.toggleDetails(props.item)} className={styles.ingredient}>
             <div className={styles.counter}>
                 <Counter count={1} size="default" />
             </div>
             <img src={image} alt={name} />
             <div className={styles.priceWrapper}>
-                <span className="mr-5">{price}</span>
+                <span className={`${styles.ingredientPrice} mr-5`}>{price}</span>
                 <CurrencyIcon type="primary" />
             </div>
-            <p className="text text_type_main-default">{name}</p>
+            <p className={`${styles.ingredientTitle} text text_type_main-default`}>{name}</p>
         </div>
     );
 };

@@ -20,7 +20,7 @@ const BurgerConstructor = (props) => {
 
     return (
         <section className={styles.constructorBlock}>
-            {isOrderAcceptedActive && <OrderAccepted toggleOrderAccepted={toggleOrderAccepted}/>}
+            {isOrderAcceptedActive && <OrderAccepted toggleModal={toggleOrderAccepted}/>}
             <div className="ml-15">
                 <div className={styles.topBottom}>
                     <ConstructorElement

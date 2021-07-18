@@ -1,13 +1,3 @@
-.modal {
-    position: relative;
-    width: 720px;
-    height: 539px;
-    opacity: 1;
-    background-color: #131316;
-    border-radius: 40px;
-    border: 1px solid rgba(76, 76, 255, 0.2);
-    text-align: center;
-}
 .ingredientImage {
     width: 480px;
     height: 240px;
@@ -18,7 +8,7 @@
 .ingredientEnergyMain {
     display: flex;
     margin-top: 32px;
-    margin-left: 100px;
+    justify-content: center;
     font-size: 16px;
     font-family: 'Jet Brains Mono';
 }
@@ -30,8 +20,13 @@
     height: 60px;
 }
 .closeButton {
-    float: right;
-    position: relative;
     cursor: pointer;
-    right: 40px;
+}
+
+.ingredientDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 640px;
+    height: 64px;
 }

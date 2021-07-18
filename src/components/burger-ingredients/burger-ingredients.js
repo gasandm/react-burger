@@ -35,7 +35,7 @@ const BurgerIngredients = (props) => {
 
     return (
         <section className={styles.ingredientsBlock}>
-            {isDetailsActive && <IngredientDetails item={activeItem} toggleIngredientDetails={toggleDetails}/>}
+            {isDetailsActive && <IngredientDetails item={activeItem} toggleModal={toggleDetails}/>}
             <nav>
                 <Tabs tabs={tabs} />
             </nav>

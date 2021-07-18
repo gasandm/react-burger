@@ -1,13 +1,13 @@
-.ingridient {
+.ingredient {
     width: 272px;
     text-align: center;
     margin-left: 16px;
     margin-right: 8px;
+}
 
-    p {
-        font-size: 16px;
-        height: 48px;
-    }
+.ingredientTitle {
+    font-size: 16px;
+    height: 48px;
 }
 
 .priceWrapper {
@@ -17,10 +17,10 @@
     align-items: center;
     justify-content: center;
     margin: 4px 0;
+}
 
-    span {
-        display: inline;
-    }
+.ingredientPrice {
+    display: inline;
 }
 
 .counter {

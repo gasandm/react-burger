@@ -1,48 +1,27 @@
 .orderNumber {
-    display: block;
-    position: absolute;
-    width: 520px;
-    height: 120px;
-    left: 100px;
-    top: 120px;
     font-family: "Iceland";
     font-size: 140px;
-    text-align: center;
     line-height: 0.9em;
+    display: block;
+    margin-top: 16px;
 }
 .orderId {
     display: block;
-    position: absolute;
-    width: 520px;
-    height: 30px;
-    left: 100px;
-    top: 272px;
     font-size: 28px;
-    text-align: center;
+    margin-top: 32px;
 }
 .doneLogo {
-    position: absolute;
-    width: 120px;
     height: 120px;
-    left: 300px;
-    top: 362px;
+    margin-top: 60px;
 }
 .orderStartInfo {
-    position: absolute;
-    width: 520px;
-    height: 24px;
-    left: 100px;
-    top: 542px;
+    display: block;
     font-size: 16px;
-    text-align: center;
+    margin-top: 60px;
 }
 .orderPlaceInfo {
-    position: absolute;
-    width: 520px;
-    height: 24px;
-    left: 100px;
-    top: 574px;
     font-size: 16px;
-    text-align: center;
     color: #8585AD;
+    margin-top: 8px;
+    display: block;
 }
