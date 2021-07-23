@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 const OrderAccepted = (props) => {
     return (
         <Modal toggleModal={props.toggleModal}>
-            <span className={styles.orderNumber}>034536</span>
+            <span className={styles.orderNumber}>{props.number}</span>
             <span className={`${styles.orderId} text text_type_main-large`}>
                 идентификатор заказа
             </span>
