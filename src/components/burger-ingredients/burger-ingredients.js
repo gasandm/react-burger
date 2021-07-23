@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import styles from "./burger-ingredients.module.scss";
 import Tabs from "../tabs/tabs";
 import IngredientSection from "../ingredient-section/ingredient-section";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
-const BurgerIngredients = (props) => {
+const BurgerIngredients = () => {
 
     const tabs = {
         activeTab: "bun",
@@ -42,14 +41,12 @@ const BurgerIngredients = (props) => {
             <div className={styles.ingredients}>
                 {tabs.tabs.map((item, index) => {
                     return (
-                    <IngredientSection toggleDetails={toggleDetails} key={index} tab={item} data={props.data}/>
+                    <IngredientSection toggleDetails={toggleDetails} key={index} tab={item}/>
                     )
                 })}
             </div>
         </section>
     );
 };
-
-BurgerIngredients.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
 
 export default BurgerIngredients;

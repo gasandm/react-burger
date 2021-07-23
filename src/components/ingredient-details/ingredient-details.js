@@ -47,8 +47,8 @@ const IngredientDetails = (props) => {
 };
 
 IngredientDetails.propTypes = {
-    toggleIngredientDetails: PropTypes.func,
-    item: PropTypes.object,
+    toggleModal: PropTypes.func.isRequired,
+    item: PropTypes.object.isRequired,
 };
 
 export default IngredientDetails;

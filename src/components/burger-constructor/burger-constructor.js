@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from 'prop-types';
+import React, { useContext } from "react";
 import {
     ConstructorElement,
     DragIcon,
@@ -8,32 +7,64 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.scss";
 import OrderAccepted from "../order-accepted/order-accepted";
+import { IngredientsContext } from '../../services/appContext';
 
-const BurgerConstructor = (props) => {
-    const bun = props.data.find((item) => item.type === "bun");
+
+const BurgerConstructor = () => {
+
+    const ingredients = useContext(IngredientsContext);
+
+    const bun = ingredients.find((item) => item.type === "bun");
 
     const[isOrderAcceptedActive, setIsOrderAcceptedActive] = React.useState(false);
+    const[orderNumber, setOrderNumber] = React.useState(0);
 
     function toggleOrderAccepted() {
-        setIsOrderAcceptedActive(!isOrderAcceptedActive);
+        const ids = 
+        {
+            "ingredients": ingredients.map(item => item._id)
+        };
+        fetch('https://norma.nomoreparties.space/api/orders', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(ids)
+        })
+            .then((res) => res.json())
+            .then((result) => {
+                setOrderNumber(result.order.number);
+                setIsOrderAcceptedActive(!isOrderAcceptedActive);
+            })
+            .catch((error) => {
+                alert(error);
+            });
     }
+
+    const price = ingredients.reduce(function(sum, current) {
+        if (current.type !== "bun") {
+            return sum + current.price;
+        } else {
+            return sum;
+        }
+      }, bun.price*2);
 
     return (
         <section className={styles.constructorBlock}>
-            {isOrderAcceptedActive && <OrderAccepted toggleModal={toggleOrderAccepted}/>}
+            {isOrderAcceptedActive && <OrderAccepted number={orderNumber} toggleModal={toggleOrderAccepted}/>}
             <div className="ml-15">
                 <div className={styles.topBottom}>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={bun.name}
+                        text={bun.name+' (верх)'}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
                 </div>
                 <div className={styles.ingredientsList}>
                     <div className={styles.ingredientsListInner}>
-                        {props.data.map((item) => {
+                        {ingredients.map((item) => {
                             if (item.type !== "bun") {
                                 return (
                                     <div
@@ -58,7 +89,7 @@ const BurgerConstructor = (props) => {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={bun.name}
+                        text={bun.name+' (низ)'}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
@@ -66,7 +97,7 @@ const BurgerConstructor = (props) => {
             </div>
             <div className={styles.priceTotal}>
                 <div className={styles.price}>
-                    <span className="mr-5">610</span>
+                    <span className="mr-5">{price}</span>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button onClick={toggleOrderAccepted} type="primary" size="large">
@@ -76,7 +107,5 @@ const BurgerConstructor = (props) => {
         </section>
     );
 };
-
-BurgerConstructor.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
 
 export default BurgerConstructor;
