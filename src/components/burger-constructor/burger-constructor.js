@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import PropTypes from 'prop-types';
 import {
     ConstructorElement,
     DragIcon,
@@ -13,9 +12,9 @@ import { IngredientsContext } from '../../services/appContext';
 
 const BurgerConstructor = () => {
 
-    const Ingredients = useContext(IngredientsContext);
+    const ingredients = useContext(IngredientsContext);
 
-    const bun = Ingredients.find((item) => item.type === "bun");
+    const bun = ingredients.find((item) => item.type === "bun");
 
     const[isOrderAcceptedActive, setIsOrderAcceptedActive] = React.useState(false);
     const[orderNumber, setOrderNumber] = React.useState(0);
@@ -23,9 +22,8 @@ const BurgerConstructor = () => {
     function toggleOrderAccepted() {
         const ids = 
         {
-            "ingredients": Ingredients.map(item => item._id)
+            "ingredients": ingredients.map(item => item._id)
         };
-        console.log(ids);
         fetch('https://norma.nomoreparties.space/api/orders', {
             headers: {
                 'Content-Type': 'application/json'
@@ -43,7 +41,7 @@ const BurgerConstructor = () => {
             });
     }
 
-    const price = Ingredients.reduce(function(sum, current) {
+    const price = ingredients.reduce(function(sum, current) {
         if (current.type !== "bun") {
             return sum + current.price;
         } else {
@@ -59,14 +57,14 @@ const BurgerConstructor = () => {
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={bun.name}
+                        text={bun.name+' (верх)'}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
                 </div>
                 <div className={styles.ingredientsList}>
                     <div className={styles.ingredientsListInner}>
-                        {Ingredients.map((item) => {
+                        {ingredients.map((item) => {
                             if (item.type !== "bun") {
                                 return (
                                     <div
@@ -91,7 +89,7 @@ const BurgerConstructor = () => {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={bun.name}
+                        text={bun.name+' (низ)'}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
@@ -109,7 +107,5 @@ const BurgerConstructor = () => {
         </section>
     );
 };
-
-BurgerConstructor.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
 
 export default BurgerConstructor;

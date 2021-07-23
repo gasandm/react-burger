@@ -7,10 +7,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const Ingredient = (props) => {
-    const { _id, image, price, name } = props.item;
+    const { image, price, name } = props.item;
 
     return (
-        <div key={_id} onClick={() => props.toggleDetails(props.item)} className={styles.ingredient}>
+        <div onClick={() => props.toggleDetails(props.item)} className={styles.ingredient}>
             <div className={styles.counter}>
                 <Counter count={1} size="default" />
             </div>
@@ -26,7 +26,7 @@ const Ingredient = (props) => {
 
 Ingredient.propTypes = { 
     toggleDetails: PropTypes.func,
-    item: PropTypes.object
+    item: PropTypes.object.isRequired
 };
 
 export default Ingredient;

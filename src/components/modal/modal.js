@@ -28,7 +28,8 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-    toggleOrderAccepted: PropTypes.func,
+    toggleModal: PropTypes.func.isRequired,
+    modalTitle: PropTypes.string
 };
 
 export default Modal;

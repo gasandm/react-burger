@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
-import PropTypes from 'prop-types';
+import React from "react";
 import styles from "./burger-ingredients.module.scss";
 import Tabs from "../tabs/tabs";
 import IngredientSection from "../ingredient-section/ingredient-section";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { IngredientsContext } from '../../services/appContext';
-
 
 const BurgerIngredients = () => {
 
@@ -51,7 +48,5 @@ const BurgerIngredients = () => {
         </section>
     );
 };
-
-BurgerIngredients.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
 
 export default BurgerIngredients;

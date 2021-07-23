@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./modal-overlay.module.scss";
 
 const ModalOverlay = (props) => {
@@ -20,6 +21,10 @@ const ModalOverlay = (props) => {
             {props.children}
         </div>
     );
+};
+
+ModalOverlay.propTypes = {
+    toggleModal: PropTypes.func.isRequired
 };
 
 export default ModalOverlay;

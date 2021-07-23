@@ -15,6 +15,6 @@ const Tabs = (props) => {
     );
 };
 
-Tabs.propTypes = { data: PropTypes.arrayOf(PropTypes.object) };
+Tabs.propTypes = { tabs: PropTypes.object.isRequired };
 
 export default Tabs;

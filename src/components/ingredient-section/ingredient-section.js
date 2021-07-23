@@ -7,13 +7,13 @@ import { IngredientsContext } from '../../services/appContext';
 
 const IngredientSection = (props) => {
 
-    const Ingredients = useContext(IngredientsContext);
+    const ingredients = useContext(IngredientsContext);
 
     return (
         <>
             <span className={`${styles.sectionTitle} text text_type_main-default mb-25`}>{props.tab.title}</span>
             <div className={styles.shortList}>
-                {Ingredients.map((item) => {
+                {ingredients.map((item) => {
                     if (item.type === props.tab.id) {
                         return (
                             <Ingredient toggleDetails={props.toggleDetails} key={item._id} item={item} />
@@ -25,9 +25,9 @@ const IngredientSection = (props) => {
     );
 };
 
-IngredientSection.propTypes = { 
-    data: PropTypes.arrayOf(PropTypes.object),
-    tab: PropTypes.object
+IngredientSection.propTypes = {
+    toggleDetails: PropTypes.func.isRequired,
+    tab: PropTypes.object.isRequired
 };
 
 export default IngredientSection;

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import doneLogo from "../../images/done.svg";
 import styles from "./order-accepted.module.scss";
 import Modal from "../modal/modal";
@@ -28,7 +27,8 @@ const OrderAccepted = (props) => {
 };
 
 OrderAccepted.propTypes = {
-    toggleOrderAccepted: PropTypes.func,
+    toggleModal: PropTypes.func.isRequired,
+    number: PropTypes.number.isRequired
 };
 
 export default OrderAccepted;
