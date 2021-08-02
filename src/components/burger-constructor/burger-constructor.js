@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useDrop } from "react-dnd";
 import {
     ConstructorElement,
     DragIcon,
@@ -8,13 +10,20 @@ import {
 import styles from "./burger-constructor.module.scss";
 import OrderAccepted from "../order-accepted/order-accepted";
 import { IngredientsContext } from '../../services/appContext';
+import { addToConstructor, deleteFromConstructor } from "../../services/reducers/ingredientsSlice";
+import Ingredient from "../ingredient/ingredient";
 
 
 const BurgerConstructor = () => {
 
+    const dispatch = useDispatch();
     const ingredients = useContext(IngredientsContext);
+    const addedIngredients = useSelector(store => store.ingredients.addedIngredients);
 
-    const bun = ingredients.find((item) => item.type === "bun");
+    var bun = addedIngredients.find((item) => item.type === "bun");
+    if (!bun) {
+        bun = ingredients.find((item) => item.type === "bun");
+    }
 
     const[isOrderAcceptedActive, setIsOrderAcceptedActive] = React.useState(false);
     const[orderNumber, setOrderNumber] = React.useState(0);
@@ -41,13 +50,30 @@ const BurgerConstructor = () => {
             });
     }
 
-    const price = ingredients.reduce(function(sum, current) {
+    const price = addedIngredients.reduce(function(sum, current) {
         if (current.type !== "bun") {
             return sum + current.price;
         } else {
             return sum;
         }
       }, bun.price*2);
+
+    const onDropHandler = (itemId) => {
+        const dropped = ingredients.find(item => item._id === itemId._id);
+        dispatch(addToConstructor(dropped));
+    }
+
+    const onDeleteHandler = (itemNew) => {
+        const item = ingredients.find(item => item._id === itemNew._id);
+        dispatch(deleteFromConstructor(item));
+    }
+
+    const [, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(itemId) {
+            onDropHandler(itemId);
+        },
+    });
 
     return (
         <section className={styles.constructorBlock}>
@@ -62,19 +88,19 @@ const BurgerConstructor = () => {
                         thumbnail={bun.image}
                     />
                 </div>
-                <div className={styles.ingredientsList}>
+                <div ref={dropTarget} className={styles.ingredientsList}>
                     <div className={styles.ingredientsListInner}>
-                        {ingredients.map((item) => {
+                        {addedIngredients.map((item, index) => {
                             if (item.type !== "bun") {
                                 return (
                                     <div
-                                        key={item._id}
+                                        key={index}
                                         style={{ width: "100%" }}
                                     >
                                         <DragIcon type="primary" />
                                         <ConstructorElement
-                                            key={item._id}
                                             isLocked={false}
+                                            handleClose={() => {onDeleteHandler(item)}}
                                             text={item.name}
                                             price={item.price}
                                             thumbnail={item.image}

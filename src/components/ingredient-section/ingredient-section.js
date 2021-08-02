@@ -11,7 +11,7 @@ const IngredientSection = (props) => {
 
     return (
         <>
-            <span className={`${styles.sectionTitle} text text_type_main-default mb-25`}>{props.tab.title}</span>
+            <span ref={props.tab.ref} className={`${styles.sectionTitle} text text_type_main-default mb-25`}>{props.tab.title}</span>
             <div className={styles.shortList}>
                 {ingredients.map((item) => {
                     if (item.type === props.tab.id) {
