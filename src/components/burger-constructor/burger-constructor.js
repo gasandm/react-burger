@@ -1,71 +1,89 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
     ConstructorElement,
-    DragIcon,
     Button,
     CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.scss";
 import OrderAccepted from "../order-accepted/order-accepted";
-import { IngredientsContext } from '../../services/appContext';
-import { addToConstructor, deleteFromConstructor } from "../../services/reducers/ingredientsSlice";
-import Ingredient from "../ingredient/ingredient";
-
+import IngredientInConstructor from "../ingredient-in-constructor/ingredient-in-constructor";
+import {
+    addToConstructor,
+    deleteFromConstructor,
+    fetchOrderDetails,
+    addManyToConstructor
+} from "../../services/reducers/ingredientsSlice";
 
 const BurgerConstructor = () => {
-
     const dispatch = useDispatch();
-    const ingredients = useContext(IngredientsContext);
-    const addedIngredients = useSelector(store => store.ingredients.addedIngredients);
+    const ingredients = useSelector((store) => store.ingredients.ingredients);
+    const addedIngredients = useSelector(
+        (store) => store.ingredients.addedIngredients
+    );
+    const orderDetails = useSelector((store) => store.ingredients.currentOrder);
 
     var bun = addedIngredients.find((item) => item.type === "bun");
     if (!bun) {
-        bun = ingredients.find((item) => item.type === "bun");
+        bun = {
+            calories: 0,
+            carbohydrates: 0,
+            fat: 0,
+            image: "https://code.s3.yandex.net/react/code/bun-02.png",
+            image_large:
+                "https://code.s3.yandex.net/react/code/bun-02-large.png",
+            image_mobile:
+                "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+            name: "Перетяните булку в эту область",
+            price: 0,
+            proteins: 0,
+            type: "bun",
+            __v: 0,
+            _id: "60d3b41abdacab0026a733c6",
+        };
     }
-
-    const[isOrderAcceptedActive, setIsOrderAcceptedActive] = React.useState(false);
-    const[orderNumber, setOrderNumber] = React.useState(0);
 
     function toggleOrderAccepted() {
-        const ids = 
-        {
-            "ingredients": ingredients.map(item => item._id)
-        };
-        fetch('https://norma.nomoreparties.space/api/orders', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(ids)
-        })
-            .then((res) => res.json())
-            .then((result) => {
-                setOrderNumber(result.order.number);
-                setIsOrderAcceptedActive(!isOrderAcceptedActive);
-            })
-            .catch((error) => {
-                alert(error);
-            });
+        if (addedIngredients.length > 0) {
+            const ids = {
+                ingredients: addedIngredients.map((item) => item._id),
+            };
+            if (orderDetails.success) {
+                dispatch(fetchOrderDetails({}));
+            } else {
+                dispatch(fetchOrderDetails(ids));
+            }
+        } else {
+            alert("Добавьте ингредиенты в конструктор");
+        }
     }
 
-    const price = addedIngredients.reduce(function(sum, current) {
+    const price = addedIngredients.reduce(function (sum, current) {
         if (current.type !== "bun") {
             return sum + current.price;
         } else {
             return sum;
         }
-      }, bun.price*2);
+    }, bun.price * 2);
 
     const onDropHandler = (itemId) => {
-        const dropped = ingredients.find(item => item._id === itemId._id);
+        const dropped = ingredients.find((item) => item._id === itemId._id);
         dispatch(addToConstructor(dropped));
-    }
+    };
 
-    const onDeleteHandler = (itemNew) => {
-        const item = ingredients.find(item => item._id === itemNew._id);
+    const onDeleteHandler = (itemDel) => {
+        const item = ingredients.find((item) => item._id === itemDel._id);
         dispatch(deleteFromConstructor(item));
+    };
+
+    const moveIngredient = (dragIndex, hoverIndex) => {
+        const newIngredients = [...addedIngredients];
+        const newItem = addedIngredients[dragIndex];
+        newIngredients.splice(dragIndex, 1);
+        newIngredients.splice(hoverIndex, 0, newItem);
+
+        dispatch(addManyToConstructor(newIngredients));
     }
 
     const [, dropTarget] = useDrop({
@@ -77,13 +95,18 @@ const BurgerConstructor = () => {
 
     return (
         <section className={styles.constructorBlock}>
-            {isOrderAcceptedActive && <OrderAccepted number={orderNumber} toggleModal={toggleOrderAccepted}/>}
+            {orderDetails.success && (
+                <OrderAccepted
+                    number={orderDetails.order.number}
+                    toggleModal={toggleOrderAccepted}
+                />
+            )}
             <div className="ml-15">
                 <div className={styles.topBottom}>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={bun.name+' (верх)'}
+                        text={bun.name + " (верх)"}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
@@ -93,19 +116,13 @@ const BurgerConstructor = () => {
                         {addedIngredients.map((item, index) => {
                             if (item.type !== "bun") {
                                 return (
-                                    <div
+                                    <IngredientInConstructor
+                                        index={index}
+                                        onDeleteHandler={onDeleteHandler}
                                         key={index}
-                                        style={{ width: "100%" }}
-                                    >
-                                        <DragIcon type="primary" />
-                                        <ConstructorElement
-                                            isLocked={false}
-                                            handleClose={() => {onDeleteHandler(item)}}
-                                            text={item.name}
-                                            price={item.price}
-                                            thumbnail={item.image}
-                                        />
-                                    </div>
+                                        item={item}
+                                        moveIngredient={moveIngredient}
+                                    />
                                 );
                             }
                         })}
@@ -115,7 +132,7 @@ const BurgerConstructor = () => {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={bun.name+' (низ)'}
+                        text={bun.name + " (низ)"}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
@@ -126,7 +143,11 @@ const BurgerConstructor = () => {
                     <span className="mr-5">{price}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button onClick={toggleOrderAccepted} type="primary" size="large">
+                <Button
+                    onClick={toggleOrderAccepted}
+                    type="primary"
+                    size="large"
+                >
                     Оформить заказ
                 </Button>
             </div>

@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import Ingredient from "../ingredient/ingredient";
 import PropTypes from 'prop-types';
 import styles from "./ingredient-section.module.scss";
-import { IngredientsContext } from '../../services/appContext';
 
 
 const IngredientSection = (props) => {
 
-    const ingredients = useContext(IngredientsContext);
+    const ingredients = useSelector(store => store.ingredients.ingredients);
 
     return (
         <>

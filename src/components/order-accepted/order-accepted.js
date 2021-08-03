@@ -12,14 +12,10 @@ const OrderAccepted = (props) => {
                 идентификатор заказа
             </span>
             <img className={styles.doneLogo} src={doneLogo} alt="done logo" />
-            <span
-                className={`${styles.orderStartInfo} text text_type_main-medium`}
-            >
+            <span className={`${styles.orderStartInfo} text text_type_main-medium`} >
                 Ваш заказ начали готовить
             </span>
-            <span
-                className={`${styles.orderPlaceInfo} text text_type_main-medium`}
-            >
+            <span className={`${styles.orderPlaceInfo} text text_type_main-medium`} >
                 Дождитесь готовности на орбитальной станции
             </span>
         </Modal>
