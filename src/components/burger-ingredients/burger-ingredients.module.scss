@@ -4,14 +4,6 @@
     height: 812px;
     top: 65px;
 
-    nav {
-        div {
-            div {
-                width: 33.3%;
-            }
-        }
-    }
-
     .ingredients::-webkit-scrollbar {
         width: 8px;
     }
@@ -29,4 +21,12 @@
     width: 600px;
     height: 688px;
     overflow-x: auto;
+}
+
+.tabsNav {
+    div {
+        div {
+            width: 33.3%;
+        }
+    }
 }

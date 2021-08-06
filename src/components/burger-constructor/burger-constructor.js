@@ -7,13 +7,15 @@ import {
     CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.scss";
+import defaultBun from "../../utils/default-bun";
 import OrderAccepted from "../order-accepted/order-accepted";
 import IngredientInConstructor from "../ingredient-in-constructor/ingredient-in-constructor";
 import {
     addToConstructor,
     deleteFromConstructor,
     fetchOrderDetails,
-    addManyToConstructor
+    addManyToConstructor,
+    removeFromOrderDetails
 } from "../../services/reducers/ingredientsSlice";
 
 const BurgerConstructor = () => {
@@ -24,34 +26,17 @@ const BurgerConstructor = () => {
     );
     const orderDetails = useSelector((store) => store.ingredients.currentOrder);
 
-    var bun = addedIngredients.find((item) => item.type === "bun");
-    if (!bun) {
-        bun = {
-            calories: 0,
-            carbohydrates: 0,
-            fat: 0,
-            image: "https://code.s3.yandex.net/react/code/bun-02.png",
-            image_large:
-                "https://code.s3.yandex.net/react/code/bun-02-large.png",
-            image_mobile:
-                "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-            name: "Перетяните булку в эту область",
-            price: 0,
-            proteins: 0,
-            type: "bun",
-            __v: 0,
-            _id: "60d3b41abdacab0026a733c6",
-        };
-    }
+    let bun = addedIngredients.find((item) => item.type === "bun");
+    if (!bun) bun = defaultBun;
 
     function toggleOrderAccepted() {
         if (addedIngredients.length > 0) {
-            const ids = {
-                ingredients: addedIngredients.map((item) => item._id),
-            };
             if (orderDetails.success) {
-                dispatch(fetchOrderDetails({}));
+                dispatch(removeFromOrderDetails());
             } else {
+                const ids = {
+                    ingredients: addedIngredients.map((item) => item._id)
+                };
                 dispatch(fetchOrderDetails(ids));
             }
         } else {
@@ -106,7 +91,7 @@ const BurgerConstructor = () => {
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={bun.name + " (верх)"}
+                        text={`${bun.name} (верх)`}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
@@ -132,7 +117,7 @@ const BurgerConstructor = () => {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={bun.name + " (низ)"}
+                        text={`${bun.name} (низ)`}
                         price={bun.price}
                         thumbnail={bun.image}
                     />

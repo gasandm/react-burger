@@ -66,7 +66,7 @@ const BurgerIngredients = () => {
     return (
         <section className={styles.ingredientsBlock}>
             {activeItem._id && <IngredientDetails item={activeItem} toggleModal={toggleDetails}/>}
-            <nav>
+            <nav className={styles.tabsNav}>
                 <Tabs tabs={tabs} />
             </nav>
             <div ref={scrollContainerRef} onScroll={handleScroll} className={styles.ingredients}>

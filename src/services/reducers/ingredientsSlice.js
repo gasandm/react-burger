@@ -9,9 +9,14 @@ const fetchIngredients = createAsyncThunk(
             method: 'GET',
             headers: {"Content-Type": "application/json"}
         })
-        .then((res) => res.json())
-        .then((result) => {
-            return result.data;
+        .then((res) => {
+            if (!res.ok) {
+                return Promise.reject(`Не удалось загрузить ингредиенты. Ошибка ${res.status}`); 
+            }
+            return res.json();
+        })
+        .then((res) => {
+            return res.data;
         })
         .catch((error) => {
             alert(error);
@@ -29,7 +34,12 @@ const fetchOrderDetails = createAsyncThunk(
             method: 'POST',
             body: JSON.stringify(ids)
         })
-        .then((res) => res.json())
+        .then((res) => {
+            if (!res.ok) {
+                return Promise.reject(`Не удалось загрузить детали заказа. Ошибка ${res.status}`); 
+            }
+            return res.json();
+        })
         .then((result) => {
             return result;
         })
@@ -85,6 +95,9 @@ const ingredientsSlice = createSlice({
         },
         addManyToConstructor(state, action) {
             state.addedIngredients = action.payload;
+        },
+        removeFromOrderDetails(state) {
+            state.currentOrder = {};
         }
     },
     extraReducers: {
@@ -98,5 +111,5 @@ const ingredientsSlice = createSlice({
 });
 
 export default ingredientsSlice.reducer;
-export const { addToConstructor, deleteFromConstructor, addToDetails, removeFromDetails, addManyToConstructor } = ingredientsSlice.actions;
+export const { addToConstructor, deleteFromConstructor, addToDetails, removeFromDetails, addManyToConstructor, removeFromOrderDetails } = ingredientsSlice.actions;
 export { fetchIngredients, fetchOrderDetails };

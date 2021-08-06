@@ -84,6 +84,8 @@ const IngredientInConstructor = (props) => {
 IngredientInConstructor.propTypes = {
     item: PropTypes.object.isRequired,
     onDeleteHandler: PropTypes.func.isRequired,
+    moveIngredient: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
 };
 
 export default IngredientInConstructor;
