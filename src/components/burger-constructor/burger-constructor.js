@@ -1,85 +1,113 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useDrop } from "react-dnd";
 import {
     ConstructorElement,
-    DragIcon,
     Button,
     CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.scss";
+import defaultBun from "../../utils/default-bun";
 import OrderAccepted from "../order-accepted/order-accepted";
-import { IngredientsContext } from '../../services/appContext';
-
+import IngredientInConstructor from "../ingredient-in-constructor/ingredient-in-constructor";
+import {
+    addToConstructor,
+    deleteFromConstructor,
+    fetchOrderDetails,
+    addManyToConstructor,
+    removeFromOrderDetails
+} from "../../services/reducers/ingredientsSlice";
 
 const BurgerConstructor = () => {
+    const dispatch = useDispatch();
+    const ingredients = useSelector((store) => store.ingredients.ingredients);
+    const addedIngredients = useSelector(
+        (store) => store.ingredients.addedIngredients
+    );
+    const orderDetails = useSelector((store) => store.ingredients.currentOrder);
 
-    const ingredients = useContext(IngredientsContext);
-
-    const bun = ingredients.find((item) => item.type === "bun");
-
-    const[isOrderAcceptedActive, setIsOrderAcceptedActive] = React.useState(false);
-    const[orderNumber, setOrderNumber] = React.useState(0);
+    let bun = addedIngredients.find((item) => item.type === "bun");
+    if (!bun) bun = defaultBun;
 
     function toggleOrderAccepted() {
-        const ids = 
-        {
-            "ingredients": ingredients.map(item => item._id)
-        };
-        fetch('https://norma.nomoreparties.space/api/orders', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(ids)
-        })
-            .then((res) => res.json())
-            .then((result) => {
-                setOrderNumber(result.order.number);
-                setIsOrderAcceptedActive(!isOrderAcceptedActive);
-            })
-            .catch((error) => {
-                alert(error);
-            });
+        if (addedIngredients.length > 0) {
+            if (orderDetails.success) {
+                dispatch(removeFromOrderDetails());
+            } else {
+                const ids = {
+                    ingredients: addedIngredients.map((item) => item._id)
+                };
+                dispatch(fetchOrderDetails(ids));
+            }
+        } else {
+            alert("Добавьте ингредиенты в конструктор");
+        }
     }
 
-    const price = ingredients.reduce(function(sum, current) {
+    const price = addedIngredients.reduce(function (sum, current) {
         if (current.type !== "bun") {
             return sum + current.price;
         } else {
             return sum;
         }
-      }, bun.price*2);
+    }, bun.price * 2);
+
+    const onDropHandler = (itemId) => {
+        const dropped = ingredients.find((item) => item._id === itemId._id);
+        dispatch(addToConstructor(dropped));
+    };
+
+    const onDeleteHandler = (itemDel) => {
+        const item = ingredients.find((item) => item._id === itemDel._id);
+        dispatch(deleteFromConstructor(item));
+    };
+
+    const moveIngredient = (dragIndex, hoverIndex) => {
+        const newIngredients = [...addedIngredients];
+        const newItem = addedIngredients[dragIndex];
+        newIngredients.splice(dragIndex, 1);
+        newIngredients.splice(hoverIndex, 0, newItem);
+
+        dispatch(addManyToConstructor(newIngredients));
+    }
+
+    const [, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(itemId) {
+            onDropHandler(itemId);
+        },
+    });
 
     return (
         <section className={styles.constructorBlock}>
-            {isOrderAcceptedActive && <OrderAccepted number={orderNumber} toggleModal={toggleOrderAccepted}/>}
+            {orderDetails.success && (
+                <OrderAccepted
+                    number={orderDetails.order.number}
+                    toggleModal={toggleOrderAccepted}
+                />
+            )}
             <div className="ml-15">
                 <div className={styles.topBottom}>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={bun.name+' (верх)'}
+                        text={`${bun.name} (верх)`}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
                 </div>
-                <div className={styles.ingredientsList}>
+                <div ref={dropTarget} className={styles.ingredientsList}>
                     <div className={styles.ingredientsListInner}>
-                        {ingredients.map((item) => {
+                        {addedIngredients.map((item, index) => {
                             if (item.type !== "bun") {
                                 return (
-                                    <div
-                                        key={item._id}
-                                        style={{ width: "100%" }}
-                                    >
-                                        <DragIcon type="primary" />
-                                        <ConstructorElement
-                                            key={item._id}
-                                            isLocked={false}
-                                            text={item.name}
-                                            price={item.price}
-                                            thumbnail={item.image}
-                                        />
-                                    </div>
+                                    <IngredientInConstructor
+                                        index={index}
+                                        onDeleteHandler={onDeleteHandler}
+                                        key={index}
+                                        item={item}
+                                        moveIngredient={moveIngredient}
+                                    />
                                 );
                             }
                         })}
@@ -89,7 +117,7 @@ const BurgerConstructor = () => {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={bun.name+' (низ)'}
+                        text={`${bun.name} (низ)`}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
@@ -100,7 +128,11 @@ const BurgerConstructor = () => {
                     <span className="mr-5">{price}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button onClick={toggleOrderAccepted} type="primary" size="large">
+                <Button
+                    onClick={toggleOrderAccepted}
+                    type="primary"
+                    size="large"
+                >
                     Оформить заказ
                 </Button>
             </div>

@@ -6,11 +6,10 @@ const ModalOverlay = (props) => {
 
     React.useEffect(()=>{
         const checkForEsc = (e) => {
-            if(e.key === 'Escape') props.toggleModal();
+            if(e.key === 'Escape') props.toggleModal(e);
         }
-
         document.addEventListener("keydown", checkForEsc, false);
-        
+
         return () => {
             document.removeEventListener("keydown", checkForEsc, false);
         }
