@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 import { addToDetails, removeFromDetails } from "../../services/reducers/ingredientsSlice";
 import styles from "./burger-ingredients.module.scss";
 import Tabs from "../tabs/tabs";
@@ -8,7 +9,9 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const BurgerIngredients = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const location = useLocation()
 
     const [nearest, setNearest] = React.useState("bun");
     
@@ -60,7 +63,9 @@ const BurgerIngredients = () => {
     };
 
     function toggleDetails(item) {
-        item._id ? dispatch(addToDetails(item)) : dispatch(removeFromDetails());
+        // const background = history.action === 'PUSH' && location.state && location.state.background
+        // location.push('ingredients/'+item._id)
+        item._id ? dispatch(addToDetails(item)) : dispatch(removeFromDetails())
     }
 
     return (

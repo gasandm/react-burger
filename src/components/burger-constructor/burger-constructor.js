@@ -19,15 +19,13 @@ import {
 } from "../../services/reducers/ingredientsSlice";
 
 const BurgerConstructor = () => {
-    const dispatch = useDispatch();
-    const ingredients = useSelector((store) => store.ingredients.ingredients);
-    const addedIngredients = useSelector(
-        (store) => store.ingredients.addedIngredients
-    );
-    const orderDetails = useSelector((store) => store.ingredients.currentOrder);
+    const dispatch = useDispatch()
+    const ingredients = useSelector(store => store.ingredients.ingredients)
+    const addedIngredients = useSelector(store => store.ingredients.addedIngredients)
+    const orderDetails = useSelector(store => store.ingredients.currentOrder)
 
-    let bun = addedIngredients.find((item) => item.type === "bun");
-    if (!bun) bun = defaultBun;
+    let bun = addedIngredients.find((item) => item.type === "bun")
+    if (!bun) bun = defaultBun
 
     function toggleOrderAccepted() {
         if (addedIngredients.length > 0) {

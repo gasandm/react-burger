@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
     Logo,
     BurgerIcon,
@@ -16,7 +17,9 @@ const AppHeader = () => {
                         <div className="d-ib">
                             <BurgerIcon type="primary" />
                         </div>
-                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
+                        <span
+                            className={`${styles.topTitle} text text_type_main-default ml-2`}
+                        >
                             Конструктор
                         </span>
                     </li>
@@ -24,20 +27,26 @@ const AppHeader = () => {
                         <div className="d-ib">
                             <ListIcon type="primary" />
                         </div>
-                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
+                        <span
+                            className={`${styles.topTitle} text text_type_main-default ml-2`}
+                        >
                             Лента заказов
                         </span>
                     </li>
                     <li className={styles.logo}>
-                        <Logo />
+                        <Link to="/">
+                            <Logo />
+                        </Link>
                     </li>
                     <li className={styles.navElement}>
-                        <div className="d-ib">
-                            <ProfileIcon type="primary" />
-                        </div>
-                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
-                            Личный кабинет
-                        </span>
+                        <Link to="/profile">
+                            <div className="d-ib">
+                                <ProfileIcon type="primary" />
+                            </div>
+                            <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
+                                Личный кабинет
+                            </span>
+                        </Link>
                     </li>
                 </ul>
             </nav>

@@ -1,6 +1,11 @@
 .topHeader {
     width: 100%;
     background-color: #1c1c21;
+    color: #8585AD;
+
+    a {
+        color: #8585AD;
+    }
 
     .mainNav {
         display: flex;
@@ -17,6 +22,10 @@
     }
 }
 
+svg {
+    fill: #8585AD;
+}
+
 .navElement {
     position: relative;
     cursor: pointer;
@@ -24,10 +33,13 @@
 }
 
 .logo {
-    margin-right: 200px;
+    margin-right: 215px;
     position: relative;
     top: 0px;
     cursor: pointer;
+    svg {
+        fill: transparent;
+    }
 }
 
 .navUl {
