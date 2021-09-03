@@ -1,34 +1,33 @@
 import { Route, Redirect } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { getUserDetails } from "../../services/reducers/authSlice";
+import { refreshTokenFunc } from "../../services/reducers/authSlice";
 
 export function ProtectedRoute({ children, ...rest }) {
-    const user = useSelector((store) => store.auth.success);
-    const [isUserLoaded, setUserLoaded] = useState(false);
-
-    const dispatch = useDispatch();
+    const [isTokenValidated, setIsTokenValidated] = useState(null)
+    const [notAuth, setNotAuth] = useState(true)
 
     useEffect(() => {
-        const getDetails = async () => {
-            if (!isUserLoaded) {
-                dispatch(getUserDetails());
-                setUserLoaded(true);
-            } else {
-                setUserLoaded(true);
-            }
-        };
-        getDetails();
-    }, [dispatch]);
+        refreshTokenFunc()
+            .then((result) => {
+                if (result.success) {
+                    setIsTokenValidated(true)
+                } else {
+                    setIsTokenValidated(null)
+                }
+            })
+            .catch((err) => {
+                setNotAuth(false)
+            })
+    }, []);
 
-    if (!isUserLoaded) { return 'Загружаем...'; }
+    if (isTokenValidated === null && notAuth) { return 'Загружаем...'; }
 
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                user ? (
+                isTokenValidated ? (
                     children
                 ) : (
                     <Redirect

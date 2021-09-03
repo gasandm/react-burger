@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 import styles from "./ingredient-in-constructor.module.scss";
@@ -13,7 +13,7 @@ const IngredientInConstructor = (props) => {
 
     const ref = useRef(null);
 
-    const [{ isDragging }, drag] = useDrag({
+    const [, drag] = useDrag({
         type: "ingredientInner",
         item: () => {
             return { _id, index };

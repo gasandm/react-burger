@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -8,6 +8,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngridients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import IngredientPage from "../ingredient-details/ingredient-page";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 import { ProtectedRoute } from "../protected-route/protected-route";
 import { ProtectedAuthRoute } from "../protected-auth-route/protected-auth-route";
 import { fetchIngredients } from "../../services/reducers/ingredientsSlice";
@@ -16,19 +17,20 @@ import { LoginPage, NotFound, RegisterPage, ResetPassword, ForgotPassword, Profi
 import styles from "./app.module.scss";
 import "macro-css";
 
-const API = "https://norma.nomoreparties.space/api/ingredients";
-
 function App() {
-    const dispatch = useDispatch();
+    const location = useLocation()
+    const history = useHistory()
+    const dispatch = useDispatch()
+    const background = history.action === 'PUSH' && location.state && location.state.background
 
     React.useEffect(() => {
         dispatch(fetchIngredients());
     }, [dispatch]);
 
     return (
-        <Router>
+        <>
             <AppHeader />
-            <Switch>
+            <Switch location={background || location}>
                 <Route path="/" exact={true}>
                     <main className={styles.burgerTable}>
                         <span className="text text_type_main-large mt-40">
@@ -62,7 +64,9 @@ function App() {
                     <NotFound/>
                 </Route>
             </Switch>
-        </Router>
+
+            {background && <Route path="/ingredients/:id" children={<IngredientDetails />} />} 
+        </>
     );
 }
 

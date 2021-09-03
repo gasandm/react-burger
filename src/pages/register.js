@@ -1,28 +1,26 @@
-import React, { useCallback, useState } from "react";
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
     Button,
     Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { addCurrentUser, register } from "../services/reducers/authSlice";
+import { register } from "../services/reducers/authSlice";
 
 import styles from "./pages.module.scss";
 
-//import { useAuth } from '../services/auth';
-
 
 export function RegisterPage() {
-
     const dispatch = useDispatch();
     const history = useHistory();
-    const [value, setValue] = React.useState("");
-    const [passValue, setPassValue] = React.useState("");
-    const [nameValue, setNameValue] = React.useState("");
-    const [type, setType] = React.useState("password");
-    const [icon, setIcon] = React.useState("ShowIcon");
-    const inputRef = React.useRef(null);
+    const [value, setValue] = useState("");
+    const [passValue, setPassValue] = useState("");
+    const [nameValue, setNameValue] = useState("");
+    const [type, setType] = useState("password");
+    const [icon, setIcon] = useState("ShowIcon");
+    const inputRef = useRef(null);
+    
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password");
         icon === "ShowIcon" ? setIcon("HideIcon") : setIcon("ShowIcon");

@@ -1,4 +1,3 @@
-import React from "react";
 import { useDrag } from "react-dnd";
 import PropTypes from 'prop-types';
 import styles from "./ingredient.module.scss";
@@ -31,7 +30,7 @@ const Ingredient = (props) => {
 };
 
 Ingredient.propTypes = { 
-    toggleDetails: PropTypes.func,
+    toggleDetails: PropTypes.func.isRequired,
     item: PropTypes.object.isRequired
 };
 

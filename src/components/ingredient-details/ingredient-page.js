@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { useParams } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import styles from "./ingredient-details.module.scss";
@@ -7,7 +5,7 @@ import styles from "./ingredient-details.module.scss";
 const IngredientPage = () => {
     const { id } = useParams();
     const ingredients = useSelector(store => store.ingredients.ingredients);
-    const item = ingredients.find(item => item._id == id);
+    const item = ingredients.find(item => item._id === id);
     
     return (
         item ? (
@@ -57,11 +55,6 @@ const IngredientPage = () => {
         )
         
     );
-};
-
-IngredientPage.propTypes = {
-    toggleModal: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired,
 };
 
 export default IngredientPage;

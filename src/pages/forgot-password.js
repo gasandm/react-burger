@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import {
     Button,
     Input
@@ -8,15 +7,12 @@ import {
 
 import styles from "./pages.module.scss";
 
-//import { useAuth } from '../services/auth';
-
 
 export function ForgotPassword() {
-    const dispatch = useDispatch()
+    const forgotPassAPI = "https://norma.nomoreparties.space/api/password-reset"
+
     const history = useHistory()
     const [value, setValue] = useState("")
-
-    const forgotPassAPI = "https://norma.nomoreparties.space/api/password-reset"
 
     const onForgotHandle = () => {
         fetch(forgotPassAPI, {

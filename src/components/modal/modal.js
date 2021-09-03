@@ -1,21 +1,36 @@
-import React from "react";
 import ReactDOM from "react-dom";
+import { useDispatch } from "react-redux";
 import styles from "./modal.module.scss";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { addToDetails, removeFromDetails } from "../../services/reducers/ingredientsSlice";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import { useHistory } from "react-router-dom";
 
 const modalRoot = document.getElementById("react-modals");
 
+
 const Modal = (props) => {
+    const history = useHistory()
+    
+    function toggleDetails(item) {
+        if(item._id) {
+            dispatch(addToDetails(item))
+        } else {
+            dispatch(removeFromDetails())
+            history.replace('/')
+        } 
+    }
+    const dispatch = useDispatch()
+
     return ReactDOM.createPortal(
-        <ModalOverlay toggleModal={props.toggleModal}>
+        <ModalOverlay toggleModal={toggleDetails}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
                 <div className={`${styles.details} text text_type_main-large`}>
                     <span>{props.modalTitle}</span>
                     <div
                         className={styles.closeButton}
-                        onClick={props.toggleModal}
+                        onClick={toggleDetails}
                     >
                         <CloseIcon type="primary" />
                     </div>
@@ -28,7 +43,6 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-    toggleModal: PropTypes.func.isRequired,
     modalTitle: PropTypes.string
 };
 

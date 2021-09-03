@@ -1,16 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Redirect } from "react-router"
 
 const logoutAPI = "https://norma.nomoreparties.space/api/auth/logout";
 const loginAPI = "https://norma.nomoreparties.space/api/auth/login";
 const registerAPI = "https://norma.nomoreparties.space/api/auth/register";
 const refreshAPI = "https://norma.nomoreparties.space/api/auth/token";
 const getUserAPI = "https://norma.nomoreparties.space/api/auth/user";
-
-const checkResponse = (res) => {
-    if (!res.ok) return res.json().then((err) => Promise.reject(err))
-    return res.json();
-}
 
 function setCookie(name, value, props) {
     props = props || {};
@@ -171,12 +165,15 @@ const refreshTokenFunc = async () => {
             token: localStorage.getItem('refreshToken')
         })
     })
+    .then((res) => {
+        if (!res.ok) return Promise.reject(`Не удалось обновить токен. Ошибка ${res.status}`)
+        return res.json();
+    })
     .then((result) => {
         localStorage.setItem('refreshToken', result.refreshToken)
         setCookie('accessToken', result.accessToken)
         return result;
     })
-    .then(checkResponse);
 }
 
 const getUserDetails = createAsyncThunk(
@@ -186,7 +183,7 @@ const getUserDetails = createAsyncThunk(
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + getCookie('accessToken')
+                'Authorization': getCookie('accessToken')
             }
         })
         .then((res) => {
@@ -204,11 +201,14 @@ const getUserDetails = createAsyncThunk(
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + getCookie('accessToken')
+                    'Authorization': getCookie('accessToken')
                 }
             })
         })
-        .then(checkResponse)
+        .then((res) => {
+            if (!res.ok) return res.json().then((err) => Promise.reject(err))
+            return res.json();
+        })
     }
 );
 
@@ -276,6 +276,7 @@ const authSlice = createSlice({
             }
         },
         [getUserDetails.fulfilled]: (state, action) => {
+            console.log(action.payload)
             if(action.payload.success) {
                 state.user.email = action.payload.user.email
                 state.user.name = action.payload.user.name
@@ -291,4 +292,4 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 export const { addCurrentUser } = authSlice.actions;
-export { register, login, logout, refreshToken, getUserDetails, setUserDetails };
+export { register, login, logout, refreshToken, getUserDetails, setUserDetails, refreshTokenFunc };

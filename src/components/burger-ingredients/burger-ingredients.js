@@ -1,25 +1,20 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { addToDetails, removeFromDetails } from "../../services/reducers/ingredientsSlice";
 import styles from "./burger-ingredients.module.scss";
 import Tabs from "../tabs/tabs";
 import IngredientSection from "../ingredient-section/ingredient-section";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const BurgerIngredients = () => {
-
     const dispatch = useDispatch()
-    const history = useHistory()
     const location = useLocation()
+    const [nearest, setNearest] = useState("bun");
 
-    const [nearest, setNearest] = React.useState("bun");
-    
-    const scrollContainerRef = React.useRef(null);
-    const bunRef = React.useRef(null);
-    const sauceRef = React.useRef(null);
-    const mainRef = React.useRef(null);
-    const activeItem = useSelector(store => store.ingredients.currentItem);
+    const scrollContainerRef = useRef(null);
+    const bunRef = useRef(null);
+    const sauceRef = useRef(null);
+    const mainRef = useRef(null);
 
     const handleScroll = () => {
         // Сравниваем расстояния от заголовков до верхней части скроллящегося контейнера
@@ -63,14 +58,16 @@ const BurgerIngredients = () => {
     };
 
     function toggleDetails(item) {
-        // const background = history.action === 'PUSH' && location.state && location.state.background
-        // location.push('ingredients/'+item._id)
-        item._id ? dispatch(addToDetails(item)) : dispatch(removeFromDetails())
+        if(item._id) {
+            dispatch(addToDetails(item))
+        } else {
+            dispatch(removeFromDetails())
+            location.push('/')
+        } 
     }
 
     return (
         <section className={styles.ingredientsBlock}>
-            {activeItem._id && <IngredientDetails item={activeItem} toggleModal={toggleDetails}/>}
             <nav className={styles.tabsNav}>
                 <Tabs tabs={tabs} />
             </nav>

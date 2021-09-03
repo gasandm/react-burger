@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useRef } from "react";
 import { Redirect, Link, useHistory } from "react-router-dom";
 import {
     Button,
@@ -9,25 +8,19 @@ import {
 import styles from "./pages.module.scss";
 
 export function ResetPassword() {
+    const forgotPassAPI = "https://norma.nomoreparties.space/api/password-reset";
     const [value, setValue] = useState("")
     const [passValue, setPassValue] = useState("")
     const [type, setType] = useState("password")
     const [icon, setIcon] = useState("ShowIcon")
-    const inputRef = React.useRef(null)
+    const inputRef = useRef(null)
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password")
         icon === "ShowIcon" ? setIcon("HideIcon") : setIcon("ShowIcon")
     };
 
-    const forgotPassAPI = "https://norma.nomoreparties.space/api/password-reset";
-
     const history = useHistory()
-    const dispatch = useDispatch()
     const isForgot = localStorage.getItem('isForgot')
-
-    React.useEffect(() => {
-        
-    }, [])
 
     const onResetHandle = () => {
         fetch(`${forgotPassAPI}/reset`, {

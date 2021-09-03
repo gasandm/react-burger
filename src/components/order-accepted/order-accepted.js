@@ -1,4 +1,3 @@
-import React from "react";
 import doneLogo from "../../images/done.svg";
 import styles from "./order-accepted.module.scss";
 import Modal from "../modal/modal";
