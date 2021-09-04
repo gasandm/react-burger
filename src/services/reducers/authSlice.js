@@ -218,13 +218,14 @@ const setUserDetails = createAsyncThunk(
         return await fetch(getUserAPI, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + getCookie('accessToken')
+                'Authorization': getCookie('accessToken')
             },
             method: 'PATCH',
             body: JSON.stringify(form)
         })
         .then((res) => {
             if (!res.ok) return res.json().then((err) => Promise.reject(err))
+            alert('Данные обновлены')
             return res.json();
         })
         .catch((err) => {
@@ -276,7 +277,6 @@ const authSlice = createSlice({
             }
         },
         [getUserDetails.fulfilled]: (state, action) => {
-            console.log(action.payload)
             if(action.payload.success) {
                 state.user.email = action.payload.user.email
                 state.user.name = action.payload.user.name

@@ -26,8 +26,7 @@ export function ProfilePage() {
     }
 
     const editUserHandle = () => {
-        dispatch(setUserDetails({ email: value, name: nameValue, password: passValue }))
-        alert('Данные обновлены')
+        dispatch(setUserDetails({ email: value, name: nameValue }))
     }
 
     const onResetHandle = () => {

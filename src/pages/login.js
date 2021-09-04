@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useLocation, Redirect } from "react-router-dom";
 import {
     Button,
     Input
@@ -12,6 +12,7 @@ import styles from "./pages.module.scss";
 
 
 export function LoginPage() {
+    const user = useSelector(store => store.auth.user)
     const dispatch = useDispatch();
     const history = useHistory();
     const [value, setValue] = React.useState("");
@@ -19,6 +20,7 @@ export function LoginPage() {
     const [type, setType] = React.useState("password");
     const [icon, setIcon] = React.useState("ShowIcon");
     const inputRef = React.useRef(null);
+    const location = useLocation()
     
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password");
@@ -31,7 +33,10 @@ export function LoginPage() {
             return false
         }
         dispatch(login({ email: value, password: passValue }));
-        history.push('/')
+        // setTimeout(function(){ 
+        //     history.push(location.state.from ? location.state.from : '/234');
+        // }, 2000);
+
     }
 
     return (

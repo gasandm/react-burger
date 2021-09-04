@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import styles from "./modal.module.scss";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { addToDetails, removeFromDetails } from "../../services/reducers/ingredientsSlice";
+import { addToDetails, removeFromDetails, removeFromOrderDetails } from "../../services/reducers/ingredientsSlice";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useHistory } from "react-router-dom";
 
@@ -18,6 +18,7 @@ const Modal = (props) => {
             dispatch(addToDetails(item))
         } else {
             dispatch(removeFromDetails())
+            dispatch(removeFromOrderDetails())
             history.replace('/')
         } 
     }
