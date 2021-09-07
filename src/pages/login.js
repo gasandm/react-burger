@@ -12,15 +12,12 @@ import styles from "./pages.module.scss";
 
 
 export function LoginPage() {
-    const user = useSelector(store => store.auth.user)
     const dispatch = useDispatch();
-    const history = useHistory();
     const [value, setValue] = React.useState("");
     const [passValue, setPassValue] = React.useState("");
     const [type, setType] = React.useState("password");
     const [icon, setIcon] = React.useState("ShowIcon");
     const inputRef = React.useRef(null);
-    const location = useLocation()
     
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password");
@@ -33,10 +30,6 @@ export function LoginPage() {
             return false
         }
         dispatch(login({ email: value, password: passValue }));
-        // setTimeout(function(){ 
-        //     history.push(location.state.from ? location.state.from : '/234');
-        // }, 2000);
-
     }
 
     return (
