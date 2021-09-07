@@ -1,4 +1,4 @@
-import React from "react";
+import { Link, NavLink } from "react-router-dom";
 import {
     Logo,
     BurgerIcon,
@@ -13,31 +13,57 @@ const AppHeader = () => {
             <nav className={`${styles.mainNav} p-6`}>
                 <ul className={styles.navUl}>
                     <li className={styles.navElement}>
-                        <div className="d-ib">
-                            <BurgerIcon type="primary" />
-                        </div>
-                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
-                            Конструктор
-                        </span>
+                        <NavLink
+                            to={{ pathname: "/" }}
+                            className="text_color_inactive"
+                            activeClassName={styles.activeLink}
+                        >
+                            <div className="d-ib">
+                                <BurgerIcon type="primary" />
+                            </div>
+                            <span
+                                className={`${styles.topTitle} text text_type_main-default ml-2`}
+                            >
+                                Конструктор
+                            </span>
+                        </NavLink>
                     </li>
                     <li className={styles.navElement}>
-                        <div className="d-ib">
-                            <ListIcon type="primary" />
-                        </div>
-                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
-                            Лента заказов
-                        </span>
+                        <NavLink
+                            to={{ pathname: "/list" }}
+                            className="text_color_inactive"
+                            activeClassName={styles.activeLink}
+                        >
+                            <div className="d-ib">
+                                <ListIcon type="primary" />
+                            </div>
+                            <span
+                                className={`${styles.topTitle} text text_type_main-default ml-2`}
+                            >
+                                Лента заказов
+                            </span>
+                        </NavLink>
                     </li>
                     <li className={styles.logo}>
-                        <Logo />
+                        <Link to="/">
+                            <Logo />
+                        </Link>
                     </li>
                     <li className={styles.navElement}>
-                        <div className="d-ib">
-                            <ProfileIcon type="primary" />
-                        </div>
-                        <span className={`${styles.topTitle} text text_type_main-default ml-2`}>
-                            Личный кабинет
-                        </span>
+                        <NavLink
+                            to={{ pathname: "/profile" }}
+                            className="text_color_inactive"
+                            activeClassName={styles.activeLink}
+                        >
+                            <div className="d-ib">
+                                <ProfileIcon type="primary" />
+                            </div>
+                            <span
+                                className={`${styles.topTitle} text text_type_main-default ml-2`}
+                            >
+                                Личный кабинет
+                            </span>
+                        </NavLink>
                     </li>
                 </ul>
             </nav>

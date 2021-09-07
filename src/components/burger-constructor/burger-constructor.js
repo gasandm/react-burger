@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
@@ -17,31 +16,37 @@ import {
     addManyToConstructor,
     removeFromOrderDetails
 } from "../../services/reducers/ingredientsSlice";
+import { useHistory } from "react-router-dom";
 
 const BurgerConstructor = () => {
-    const dispatch = useDispatch();
-    const ingredients = useSelector((store) => store.ingredients.ingredients);
-    const addedIngredients = useSelector(
-        (store) => store.ingredients.addedIngredients
-    );
-    const orderDetails = useSelector((store) => store.ingredients.currentOrder);
+    const dispatch = useDispatch()
+    const ingredients = useSelector(store => store.ingredients.ingredients)
+    const addedIngredients = useSelector(store => store.ingredients.addedIngredients)
+    const orderDetails = useSelector(store => store.ingredients.currentOrder)
+    const user = useSelector(store => store.auth.user)
+    const history = useHistory();
 
-    let bun = addedIngredients.find((item) => item.type === "bun");
-    if (!bun) bun = defaultBun;
+    let bun = addedIngredients.find((item) => item.type === "bun")
+    if (!bun) bun = defaultBun
 
     function toggleOrderAccepted() {
-        if (addedIngredients.length > 0) {
-            if (orderDetails.success) {
-                dispatch(removeFromOrderDetails());
+        if(user.email) {
+            if (addedIngredients.length > 0) {
+                if (orderDetails.success) {
+                    dispatch(removeFromOrderDetails());
+                } else {
+                    const ids = {
+                        ingredients: addedIngredients.map((item) => item._id)
+                    };
+                    dispatch(fetchOrderDetails(ids));
+                }
             } else {
-                const ids = {
-                    ingredients: addedIngredients.map((item) => item._id)
-                };
-                dispatch(fetchOrderDetails(ids));
+                alert("Добавьте ингредиенты в конструктор");
             }
         } else {
-            alert("Добавьте ингредиенты в конструктор");
+            history.push("/login")
         }
+        
     }
 
     const price = addedIngredients.reduce(function (sum, current) {

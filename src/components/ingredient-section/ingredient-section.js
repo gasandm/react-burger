@@ -1,13 +1,13 @@
-import React from "react";
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import Ingredient from "../ingredient/ingredient";
 import PropTypes from 'prop-types';
 import styles from "./ingredient-section.module.scss";
 
 
 const IngredientSection = (props) => {
-
     const ingredients = useSelector(store => store.ingredients.ingredients);
+    const location = useLocation();
 
     return (
         <>
@@ -16,7 +16,9 @@ const IngredientSection = (props) => {
                 {ingredients.map((item) => {
                     if (item.type === props.tab.id) {
                         return (
-                            <Ingredient toggleDetails={props.toggleDetails} key={item._id} item={item} />
+                            <Link key={item._id} to={{ pathname: `/ingredients/${item._id}`, state: { background: location }}}>
+                                <Ingredient toggleDetails={props.toggleDetails} key={item._id} item={item} />
+                            </Link>
                         )
                     }
                 })}

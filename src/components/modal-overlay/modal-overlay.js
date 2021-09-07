@@ -1,10 +1,10 @@
-import React from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./modal-overlay.module.scss";
 
 const ModalOverlay = (props) => {
 
-    React.useEffect(()=>{
+    useEffect(()=>{
         const checkForEsc = (e) => {
             if(e.key === 'Escape') props.toggleModal(e);
         }
@@ -13,7 +13,7 @@ const ModalOverlay = (props) => {
         return () => {
             document.removeEventListener("keydown", checkForEsc, false);
         }
-    }, [])
+    }, [props])
 
     return (
         <div onClick={props.toggleModal} className={styles.overlay}>
