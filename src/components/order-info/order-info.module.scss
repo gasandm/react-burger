@@ -1,0 +1,96 @@
+.orderMain {
+    width: 640px;
+    height: 620px;
+    margin: 0px auto;
+    margin-top: calc(50vh - 420px);
+}
+
+.doneText {
+    color: #00CCCC;
+    margin-bottom: 60px;
+    font-size: 16px;
+}
+
+.ingrScroll {
+    height: 312px;
+    margin-top: 24px;
+    overflow-y: scroll;
+}
+
+.ingrScroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ingrScroll::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+.ingrScroll::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+}
+
+.OrderInfoBottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    font-size: 28px;
+}
+
+.orderPrice {
+    display: flex;
+    width: 110px;
+    justify-content: flex-end;
+
+    svg {
+        fill: white;
+        margin-left: 10px;
+    }
+}
+
+.ingrLine {
+    margin-right: 24px;
+    width: auto;
+    height: 78px;
+    display: flex;
+    align-items: center;
+}
+
+.miniIngr {
+    display: flex;
+    align-items: center;
+    border: 3px solid transparent;
+    background: 
+     linear-gradient(rgba(1, 1, 1, 1),rgba(1, 1, 1, 1)) padding-box, /*this is your grey background*/
+     linear-gradient(to top right, #833b97, #2a09c0) border-box;
+    border-radius: 50%;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    background-color: black;
+}
+
+.miniIngrImage {
+    width: 112px;
+    height: 56px;
+    position: relative;
+    right: 23px;
+}
+
+.orderPriceForOne {
+    display: flex;
+    width: 150px;
+    justify-content: flex-end;
+
+    svg {
+        fill: white;
+        margin-left: 10px;
+    }
+}
+
+.burgerName {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

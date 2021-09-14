@@ -1,6 +1,8 @@
 import React from 'react';
 import { configureStore } from "@reduxjs/toolkit";
+import thunk from 'redux-thunk'
 import rootReducer from "./services/reducers/rootReducer";
+import { wsMiddleware } from "./services/middleware/wsMiddleware";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
@@ -8,7 +10,8 @@ import { Provider } from "react-redux";
 import reportWebVitals from './reportWebVitals';
 
 const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware: [thunk, wsMiddleware]
 });
 
 ReactDOM.render(

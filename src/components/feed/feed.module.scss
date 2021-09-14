@@ -1,0 +1,103 @@
+.feedTable {
+    width: 1240px;
+    height: 912px;
+    position: relative;
+    margin: 40px auto 0;
+}
+
+.ordersBlock {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 600px;
+    height: 812px;
+    top: 65px;
+    overflow-y: scroll;
+}
+.ordersBlock::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ordersBlock::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+.ordersBlock::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+}
+
+.feedOrder {
+    padding: 24px;
+    width: 536px;
+    height: 166px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    margin-bottom: 16px;
+}
+
+.feedOrderTop {
+    display: flex;
+    justify-content: space-between;
+}
+
+.orderDetails {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ordersInfoMain {
+    width: 580px;
+    position: absolute;
+    height: 626px;
+    left: 670px;
+    top: 65px;
+}
+
+.ordersInfoTop {
+    height: 205px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ordersInfoDone {
+    width: 280px;
+    height: 100%;
+}
+
+.ordersInfoBottom {
+    width: 100%;
+    height: 360px;
+}
+
+.ordersInfoNumbers {
+    margin-top: 24px;
+    width: 100%;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.doneNum {
+    color: #00CCCC;
+}
+
+.doneText {
+    margin-top: 60px;
+}
+
+.burgerName {
+    display: flex;
+    align-items: center;
+    height: 72px;
+    div {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+}

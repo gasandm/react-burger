@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getCookie } from '../../utils/functions';
 
 const API = "https://norma.nomoreparties.space/api/ingredients";
 
@@ -29,10 +30,35 @@ const fetchOrderDetails = createAsyncThunk(
     async (ids) => {
         return await fetch('https://norma.nomoreparties.space/api/orders', {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': getCookie('accessToken')
             },
             method: 'POST',
             body: JSON.stringify(ids)
+        })
+        .then((res) => {
+            if (!res.ok) {
+                return Promise.reject(`Не удалось загрузить детали заказа. Ошибка ${res.status}`); 
+            }
+            return res.json();
+        })
+        .then((result) => {
+            return result;
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    }
+);
+
+const fetchOrder = createAsyncThunk(
+    'ingredients/fetchOrder',
+    async (orderId) => {
+        return await fetch('https://norma.nomoreparties.space/api/orders/'+orderId, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
         })
         .then((res) => {
             if (!res.ok) {
@@ -107,9 +133,12 @@ const ingredientsSlice = createSlice({
         [fetchOrderDetails.fulfilled]: (state, action) => {
             state.currentOrder = action.payload;
         },
+        [fetchOrder.fulfilled]: (state, action) => {
+            state.currentOrder = action.payload;
+        },
     }
 });
 
 export default ingredientsSlice.reducer;
 export const { addToConstructor, deleteFromConstructor, addToDetails, removeFromDetails, addManyToConstructor, removeFromOrderDetails } = ingredientsSlice.actions;
-export { fetchIngredients, fetchOrderDetails };
+export { fetchIngredients, fetchOrderDetails, fetchOrder };
