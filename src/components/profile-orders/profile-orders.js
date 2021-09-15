@@ -34,7 +34,7 @@ export default function ProfileOrders() {
                 <section className={styles.ordersBlock}>
                     {orders.map((item, index) => {
                         return (
-                            <Link key={index} to={{ pathname: `/profile/orders/${item._id}`, state: { background: location }}}>
+                            <Link key={index} to={{ pathname: `/profile/orders/${item.number}`, state: { background: location }}}>
                                 <div className={styles.feedOrder}>
                                     <div className={styles.feedOrderTop}>
                                         <span className="text text_type_digits-default">

@@ -134,7 +134,7 @@ const ingredientsSlice = createSlice({
             state.currentOrder = action.payload;
         },
         [fetchOrder.fulfilled]: (state, action) => {
-            state.currentOrder = action.payload;
+            state.currentOrder = action.payload.orders[0];
         },
     }
 });

@@ -9,7 +9,7 @@ import {
 import { format } from "date-fns";
 import { ru } from "date-fns/esm/locale";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import { fetchOrder, removeFromOrderDetails, addToDetails } from "../../services/reducers/ingredientsSlice";
+import { fetchOrder, removeFromOrderDetails } from "../../services/reducers/ingredientsSlice";
 
 import styles from "./order-modal.module.scss";
 
@@ -19,35 +19,27 @@ const OrderModal = () => {
     const history = useHistory();
 
     const ingredients = useSelector((store) => store.ingredients.ingredients);
-    const orders = useSelector((store) => store.orders.orders);
-    const order = orders.find((item) => item._id === id);
-    const [orderLoaded, setOrderLoaded] = useState(true);
+    const order = useSelector((store) => store.ingredients.currentOrder);
+    const [orderLoaded, setOrderLoaded] = useState(false);
 
     var totalPrice = 0;
     var showed = [];
 
     const goBack = () => {
+        dispatch(removeFromOrderDetails())
         history.goBack();
     }
 
-    function toggleDetails(item) {
-        if(item._id) {
-            dispatch(addToDetails(item))
-        } else {
-            dispatch(removeFromOrderDetails())
-        } 
-    }
-
-    // useEffect(() => {
-    //     dispatch(fetchOrder(id))
-    //         .then((result) => {
-    //             if (result.payload.success) {
-    //                 setOrderLoaded(true)
-    //             } else {
-    //                 setOrderLoaded(false)
-    //             }
-    //         })
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(fetchOrder(id))
+            .then((result) => {
+                if (result.payload.success) {
+                    setOrderLoaded(true)
+                } else {
+                    setOrderLoaded(false)
+                }
+            })
+    }, [dispatch])
 
     if (orderLoaded && order) {
         return (

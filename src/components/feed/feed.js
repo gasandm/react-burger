@@ -31,7 +31,7 @@ const Feed = () => {
                 <section className={styles.ordersBlock}>
                     {orders.orders.map((item, index) => {
                         return (
-                            <Link key={index} to={{ pathname: `/feed/${item._id}`, state: { background: location }}}>
+                            <Link key={index} to={{ pathname: `/feed/${item.number}`, state: { background: location }}}>
                                 <div className={styles.feedOrder}>
                                     <div className={styles.feedOrderTop}>
                                         <span className="text text_type_digits-default">

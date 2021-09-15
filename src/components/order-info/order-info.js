@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrder } from "../../services/reducers/ingredientsSlice";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { format } from "date-fns";
 import { ru } from 'date-fns/esm/locale';
@@ -8,13 +10,26 @@ import styles from "./order-info.module.scss";
 
 const OrderInfo = () => {
     const { id } = useParams();
+    const dispatch = useDispatch();
     const ingredients = useSelector(store => store.ingredients.ingredients);
-    const orders = useSelector(store => store.orders.orders);
-    const order = orders.find(item => item._id === id);
+    const order = useSelector(store => store.ingredients.currentOrder);
+    const [orderLoaded, setOrderLoaded] = useState(false);
+
     var totalPrice = 0;
     var showed = [];
+
+    useEffect(() => {
+        dispatch(fetchOrder(id))
+            .then((result) => {
+                if (result.payload.success) {
+                    setOrderLoaded(true)
+                } else {
+                    setOrderLoaded(false)
+                }
+            })
+    }, [dispatch])
     
-    if(order) {
+    if(orderLoaded && order && ingredients.length > 0) {
             return (
                 <div className={styles.orderMain}>
                     <div className='text text-center text_type_digits-default'>
