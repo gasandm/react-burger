@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
     CurrencyIcon,
@@ -9,39 +8,25 @@ import {
 import { format } from "date-fns";
 import { ru } from "date-fns/esm/locale";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import { fetchOrder, removeFromOrderDetails } from "../../services/reducers/ingredientsSlice";
 
 import styles from "./order-modal.module.scss";
 
 const OrderModal = () => {
     const { id } = useParams();
-    const dispatch = useDispatch();
     const history = useHistory();
 
     const ingredients = useSelector((store) => store.ingredients.ingredients);
-    const order = useSelector((store) => store.ingredients.currentOrder);
-    const [orderLoaded, setOrderLoaded] = useState(false);
+    const orders = useSelector((store) => store.orders.orders);
+    const order = orders.find(item => item.number === parseInt(id));
 
     var totalPrice = 0;
     var showed = [];
 
     const goBack = () => {
-        dispatch(removeFromOrderDetails())
         history.goBack();
     }
 
-    useEffect(() => {
-        dispatch(fetchOrder(id))
-            .then((result) => {
-                if (result.payload.success) {
-                    setOrderLoaded(true)
-                } else {
-                    setOrderLoaded(false)
-                }
-            })
-    }, [dispatch])
-
-    if (orderLoaded && order) {
+    if (order) {
         return (
             <ModalOverlay toggleModal={goBack} modalTitle="Детали ингредиента">
                 <div
