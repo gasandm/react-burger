@@ -44,8 +44,8 @@ export default function ProfileOrders() {
                                             {format(new Date(Date.parse(item.updatedAt)), "PPP в kk:mm O", { locale: ru })}
                                         </span>
                                     </div>
-                                    <div className="mt-6 text text_type_main-medium">
-                                        I{item.name}
+                                    <div className={`${styles.burgerName} mt-6 text text_type_main-medium`}>
+                                        {item.name}
                                     </div>
                                     <div style={{color: item.status === 'done' ? '#00CCCC' : ''}} className={`${styles.orderStatus} mt-2 text text_type_main-small`}>
                                         {item.status === 'done' ? 'Выполнен' : 'Создан'}

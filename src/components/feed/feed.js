@@ -21,8 +21,9 @@ const Feed = () => {
     }, [dispatch]);
 
     const orders = useSelector((store) => store.orders);
+    const ingredients = useSelector((store) => store.ingredients.ingredients);
 
-    if (orders.orders) {
+    if (orders.orders && ingredients) {
         return (
             <main className={styles.feedTable}>
                 <span className="text text_type_main-large mt-40">
