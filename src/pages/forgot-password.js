@@ -40,7 +40,7 @@ export function ForgotPassword() {
 
     return (
         <div className={styles.main}>
-            <p className="text text_type_main-default">Восстановление пароля</p>
+            <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
             <div className={styles.inputWrapper}>
                 <Input
                     type={"email"}

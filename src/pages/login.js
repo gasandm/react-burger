@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation, Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
     Button,
     Input
@@ -34,7 +34,7 @@ export function LoginPage() {
 
     return (
         <div className={styles.main}>
-            <p className="text text_type_main-default">Вход</p>
+            <p className="text text_type_main-medium mb-6">Вход</p>
             <div className={styles.inputWrapper}>
                 <Input
                     type={"email"}

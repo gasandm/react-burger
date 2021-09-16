@@ -37,7 +37,7 @@ export function RegisterPage() {
 
     return (
         <div className={styles.mainRegister}>
-            <p className="text text_type_main-default">Регистрация</p>
+            <p className="text text_type_main-medium mb-6">Регистрация</p>
             <div className={styles.inputWrapper}>
                 <Input
                     type={"email"}

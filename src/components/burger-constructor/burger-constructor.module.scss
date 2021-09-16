@@ -6,55 +6,63 @@
     top: 60px;
     background-color: #131316;
 
-    .topBottom {
-        margin-left: 24px;
+}
+
+.price {
+    font-size: 48px;
+    font-family: "Iceland";
+    margin-right: 40px;
+    display: flex;
+    align-items: center;
+    width: 200px;
+}
+
+.topBottom {
+    margin-left: 24px;
+
+    //нет доступа напрямую
+    svg {
+        fill: white;
     }
+}
 
-    .ingredientsList {
-        overflow-x: auto;
-        height: 440px;
-        margin-top: 10px;
-        margin-bottom: 10px;
+.ingredientsList {
+    overflow-x: auto;
+    height: 440px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.ingredientsListInner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.priceTotal {
+    width: 66%;
+    height: 63px;
+    float: right;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+
+    //нет доступа напрямую
+    svg {
+        width: 33px;
+        height: 33px;
+        fill: white;
     }
+}
 
-    .ingredientsListInner {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+.ingredientsList::-webkit-scrollbar {
+    width: 8px;
+}
 
-    .priceTotal {
-        width: 66%;
-        height: 63px;
-        float: right;
-        margin-top: 40px;
-        display: flex;
-        align-items: center;
+.ingredientsList::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
 
-        .price {
-            font-size: 48px;
-            font-family: "Iceland";
-            margin-right: 40px;
-            display: flex;
-            align-items: center;
-            width: 200px;
-        }
-
-        svg {
-            width: 33px;
-            height: 33px;
-        }
-    }
-
-    .ingredientsList::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .ingredientsList::-webkit-scrollbar-track {
-        background: #2f2f37;
-    }
-
-    .ingredientsList::-webkit-scrollbar-thumb {
-        background-color: #8585ad;
-    }
+.ingredientsList::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
 }

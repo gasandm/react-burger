@@ -30,7 +30,7 @@ const AppHeader = () => {
                     </li>
                     <li className={styles.navElement}>
                         <NavLink
-                            to={{ pathname: "/list" }}
+                            to={{ pathname: "/feed" }}
                             className="text_color_inactive"
                             activeClassName={styles.activeLink}
                         >
@@ -51,7 +51,7 @@ const AppHeader = () => {
                     </li>
                     <li className={styles.navElement}>
                         <NavLink
-                            to={{ pathname: "/profile" }}
+                            to={{ pathname: "/profile/orders" }}
                             className="text_color_inactive"
                             activeClassName={styles.activeLink}
                         >

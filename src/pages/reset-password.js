@@ -49,7 +49,7 @@ export function ResetPassword() {
     return (
         isForgot === '1' ? (
             <div className={styles.main}>
-                <p className="text text_type_main-default">Восстановление пароля</p>
+                <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
                 <div className={styles.inputWrapper}>
                     <Input
                         type={type}

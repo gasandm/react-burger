@@ -9,6 +9,10 @@ import BurgerIngridients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import IngredientPage from "../ingredient-details/ingredient-page";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Feed from "../feed/feed";
+import OrderInfo from "../order-info/order-info";
+import OrderModal from "../order-modal/order-modal";
+import ProfileOrders from "../profile-orders/profile-orders";
 import { ProtectedRoute } from "../protected-route/protected-route";
 import { ProtectedAuthRoute } from "../protected-auth-route/protected-auth-route";
 import { fetchIngredients } from "../../services/reducers/ingredientsSlice";
@@ -45,6 +49,12 @@ function App() {
                 <Route path="/ingredients/:id" exact={true}>
                     <IngredientPage />
                 </Route>
+                <Route path="/feed/" exact={true}>
+                    <Feed />
+                </Route>
+                <Route path="/feed/:id" exact={true}>
+                    <OrderInfo />
+                </Route>
                 <ProtectedAuthRoute path="/login" exact={true}>
                     <LoginPage/>
                 </ProtectedAuthRoute>
@@ -57,15 +67,23 @@ function App() {
                 <ProtectedAuthRoute path="/forgot-password" exact={true}>
                     <ForgotPassword/>
                 </ProtectedAuthRoute>
-                <ProtectedRoute path="/profile" exact={false}>
+                <ProtectedRoute path="/profile" exact={true}>
                     <ProfilePage/>
                 </ProtectedRoute>
+                <ProtectedRoute path="/profile/orders" exact={true}>
+                    <ProfileOrders/>
+                </ProtectedRoute>
+                <Route path="/profile/orders/:id" exact={true}>
+                    <OrderInfo />
+                </Route>
                 <Route>
                     <NotFound/>
                 </Route>
             </Switch>
 
             {background && <Route path="/ingredients/:id" children={<IngredientDetails />} />} 
+            {background && <Route path="/feed/:id" children={<OrderModal />} />} 
+            {background && <Route path="/profile/orders/:id" children={<OrderModal />} />} 
         </>
     );
 }

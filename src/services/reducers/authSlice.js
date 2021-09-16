@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getCookie } from '../../utils/functions';
 
 const logoutAPI = "https://norma.nomoreparties.space/api/auth/logout";
 const loginAPI = "https://norma.nomoreparties.space/api/auth/login";
@@ -27,13 +28,6 @@ function setCookie(name, value, props) {
         }
     }
     document.cookie = updatedCookie;
-} 
-
-function getCookie(name) {
-    const matches = document.cookie.match(
-        new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
-    );
-    return matches ? decodeURIComponent(matches[1]) : undefined;
 } 
 
 const register = createAsyncThunk(

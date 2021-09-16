@@ -1,0 +1,61 @@
+.mainProfile {
+    min-width: 660px;
+    margin: 120px auto auto;
+    display: flex;
+    max-width: 1205px;
+    padding: 0 30px;
+}
+
+.ordersBlock {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 844px;
+    height: 812px;
+    overflow-y: scroll;
+    top: -80px;
+    left: 40px;
+}
+.ordersBlock::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ordersBlock::-webkit-scrollbar-track {
+    background: #2f2f37;
+}
+
+.ordersBlock::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+}
+
+.orderStatus {
+    font-size: 16px;
+}
+
+.feedOrder {
+    width: 782px;
+    height: 198px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    margin-bottom: 16px;
+    padding: 24px;
+}
+
+.feedOrderTop {
+    display: flex;
+    justify-content: space-between;
+}
+
+.orderDetails {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.burgerName {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
