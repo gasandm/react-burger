@@ -21,7 +21,7 @@ export function ProtectedRoute({ children, ...rest }) {
             })
     }, []);
 
-    if (isTokenValidated === null && notAuth) { return 'Загружаем...'; }
+    if (isTokenValidated === null && notAuth) { return <h2>Загружаем...</h2>; }
 
     return (
         <Route
