@@ -13,5 +13,6 @@ const defaultBun = {
     type: "bun",
     __v: 0,
     _id: "60d3b41abdacab0026a733c6",
+    qty: 0
 };
 export default defaultBun;

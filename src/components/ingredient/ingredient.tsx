@@ -1,12 +1,12 @@
 import { useDrag } from "react-dnd";
-import PropTypes from 'prop-types';
 import styles from "./ingredient.module.scss";
 import {
     CurrencyIcon,
     Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { TIngredient } from "../../utils/types";
 
-const Ingredient = (props) => {
+const Ingredient = (props: {item: TIngredient, toggleDetails: (a: TIngredient) => void}) => {
     const { _id, image, price, name, __v } = props.item;
 
     const [, dragRef] = useDrag({
@@ -27,11 +27,6 @@ const Ingredient = (props) => {
             <p className={`${styles.ingredientTitle} text text_type_main-default`}>{name}</p>
         </div>
     );
-};
-
-Ingredient.propTypes = { 
-    toggleDetails: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired
 };
 
 export default Ingredient;

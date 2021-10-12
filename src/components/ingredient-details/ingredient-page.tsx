@@ -1,50 +1,60 @@
-import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom'
+import { useSelector } from "../../utils/hooks";
 import styles from "./ingredient-details.module.scss";
-import Modal from "../modal/modal";
 
-const IngredientDetails = () => {
-    const currentItem = useSelector(store => store.ingredients.currentItem);
-
+const IngredientPage = () => {
+    const { id }: {id:string} = useParams();
+    const ingredients = useSelector(store => store.ingredients.ingredients);
+    const item = ingredients.find(item => item._id === id);
+    
     return (
-        <Modal modalTitle="Детали ингредиента">
+        item ? (
+            <div className={styles.ingredientMain}>
+            <div className={`${styles.details} text text_type_main-large`}>
+                <span>Детали ингредиента</span>
+            </div>
             <img
                 className={styles.ingredientImage}
-                src={currentItem.image}
+                src={item.image}
                 alt="ingredient"
             />
             <span
                 className={`${styles.ingredientName} text text_type_main-medium mt-15`}
             >
-                {currentItem.name}
+                {item.name}
             </span>
             <div className={styles.ingredientEnergyMain}>
                 <div className={`${styles.ingredientEnergy} mr-20`}>
                     <span>Калории,ккал</span>
                     <span className="text text_type_digits-default">
-                        {currentItem.calories}
+                        {item.calories}
                     </span>
                 </div>
                 <div className={`${styles.ingredientEnergy} mr-20`}>
                     <span>Белки, г</span>
                     <span className="text text_type_digits-default">
-                        {currentItem.proteins}
+                        {item.proteins}
                     </span>
                 </div>
                 <div className={`${styles.ingredientEnergy} mr-20`}>
                     <span>Жиры, г</span>
                     <span className="text text_type_digits-default">
-                        {currentItem.fat}
+                        {item.fat}
                     </span>
                 </div>
                 <div className={styles.ingredientEnergy}>
                     <span>Углеводы, г</span>
                     <span className="text text_type_digits-default">
-                        {currentItem.carbohydrates}
+                        {item.carbohydrates}
                     </span>
                 </div>
             </div>
-        </Modal>
+        </div>
+        ) : (
+            null
+        )
+        
     );
 };
 
-export default IngredientDetails;
+export default IngredientPage;

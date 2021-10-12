@@ -20,12 +20,13 @@ import { LoginPage, NotFound, RegisterPage, ResetPassword, ForgotPassword, Profi
 
 import styles from "./app.module.scss";
 import "macro-css";
+import { ILocation } from "../../utils/types";
 
-function App() {
-    const location = useLocation()
+const App: React.FC = () => {
+    const location = useLocation<ILocation>()
     const history = useHistory()
     const dispatch = useDispatch()
-    const background = history.action === 'PUSH' && location.state && location.state.background
+    const background: any = history.action === 'PUSH' && location.state && location.state.background
 
     React.useEffect(() => {
         dispatch(fetchIngredients());

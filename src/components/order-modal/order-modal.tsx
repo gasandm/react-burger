@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useHistory } from "react-router-dom";
 import {
     CurrencyIcon,
@@ -12,7 +12,7 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./order-modal.module.scss";
 
 const OrderModal = () => {
-    const { id } = useParams();
+    const { id }: {id: string} = useParams();
     const history = useHistory();
 
     const ingredients = useSelector((store) => store.ingredients.ingredients);
@@ -20,7 +20,7 @@ const OrderModal = () => {
     const order = orders.find(item => item.number === parseInt(id));
 
     var totalPrice = 0;
-    var showed = [];
+    var showed: string[] = [];
 
     const goBack = () => {
         history.goBack();
@@ -28,7 +28,7 @@ const OrderModal = () => {
 
     if (order) {
         return (
-            <ModalOverlay toggleModal={goBack} modalTitle="Детали ингредиента">
+            <ModalOverlay toggleModal={goBack}>
                 <div
                     className={styles.modal}
                     onClick={(e) => e.stopPropagation()}
@@ -60,32 +60,34 @@ const OrderModal = () => {
                                 const howMany = order.ingredients.filter(
                                     (ingr) => ingr === item
                                 ).length;
-                                totalPrice += ingrInfo.price;
-                                if (!showed.includes(ingrInfo._id)) {
-                                    showed.push(ingrInfo._id);
-                                    return (
-                                        <div key={index} className={styles.ingrLine}>
-                                            <div className={styles.miniIngr}>
-                                                <img
-                                                    className={
-                                                        styles.miniIngrImage
-                                                    }
-                                                    src={ingrInfo.image}
-                                                />
+                                if(ingrInfo) {
+                                    totalPrice += ingrInfo.price;
+                                    if (!showed.includes(ingrInfo._id)) {
+                                        showed.push(ingrInfo._id);
+                                        return (
+                                            <div key={index} className={styles.ingrLine}>
+                                                <div className={styles.miniIngr}>
+                                                    <img
+                                                        className={
+                                                            styles.miniIngrImage
+                                                        }
+                                                        src={ingrInfo.image}
+                                                    />
+                                                </div>
+                                                <span className="flex text text_type_main-default ml-4">
+                                                    {ingrInfo.name}
+                                                </span>
+                                                <div
+                                                    className={`${styles.orderPriceForOne} text text_type_digits-default`}
+                                                >
+                                                    {howMany +
+                                                        " x " +
+                                                        ingrInfo.price}
+                                                    <CurrencyIcon type="primary" />
+                                                </div>
                                             </div>
-                                            <span className="flex text text_type_main-default ml-4">
-                                                {ingrInfo.name}
-                                            </span>
-                                            <div
-                                                className={`${styles.orderPriceForOne} text text_type_digits-default`}
-                                            >
-                                                {howMany +
-                                                    " x " +
-                                                    ingrInfo.price}
-                                                <CurrencyIcon type="primary" />
-                                            </div>
-                                        </div>
-                                    );
+                                        );
+                                    } else return null;
                                 } else return null;
                             })}
                         </div>

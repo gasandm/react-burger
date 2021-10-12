@@ -30,7 +30,7 @@ export function SideMenu() {
             >
                 <span className={`${styles.profileLink} text text_type_main-default mt-35`}>История заказов</span>
             </NavLink>
-            <Link>
+            <Link to=''>
                 <span onClick={logoutHandle} className={`${styles.profileLink} text_color_inactive text text_type_main-default mt-35`}>Выход</span>
             </Link>
             <div className={styles.links}>

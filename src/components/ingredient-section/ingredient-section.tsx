@@ -1,23 +1,23 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { Link, useLocation } from "react-router-dom";
 import Ingredient from "../ingredient/ingredient";
-import PropTypes from 'prop-types';
 import styles from "./ingredient-section.module.scss";
+import { TTab } from "./types";
 
 
-const IngredientSection = (props) => {
+const IngredientSection = ({ tab, toggleDetails }: {tab: TTab, toggleDetails: () => void}) => {
     const ingredients = useSelector(store => store.ingredients.ingredients);
     const location = useLocation();
 
     return (
         <>
-            <span ref={props.tab.ref} className={`${styles.sectionTitle} text text_type_main-default mb-25`}>{props.tab.title}</span>
+            <span ref={tab.ref} className={`${styles.sectionTitle} text text_type_main-default mb-25`}>{tab.title}</span>
             <div className={styles.shortList}>
                 {ingredients.map((item) => {
-                    if (item.type === props.tab.id) {
+                    if (item.type === tab.id) {
                         return (
                             <Link key={item._id} to={{ pathname: `/ingredients/${item._id}`, state: { background: location }}}>
-                                <Ingredient toggleDetails={props.toggleDetails} key={item._id} item={item} />
+                                <Ingredient toggleDetails={toggleDetails} key={item._id} item={item} />
                             </Link>
                         )
                     }
@@ -25,11 +25,6 @@ const IngredientSection = (props) => {
             </div>
         </>
     );
-};
-
-IngredientSection.propTypes = {
-    toggleDetails: PropTypes.func.isRequired,
-    tab: PropTypes.object.isRequired
 };
 
 export default IngredientSection;

@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useDrop } from "react-dnd";
 import {
     ConstructorElement,
@@ -17,12 +18,17 @@ import {
     removeFromOrderDetails
 } from "../../services/reducers/ingredientsSlice";
 import { useHistory } from "react-router-dom";
+import { TIngredient } from "../../utils/types";
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
     const ingredients = useSelector(store => store.ingredients.ingredients)
     const addedIngredients = useSelector(store => store.ingredients.addedIngredients)
+    let showOrder = true
     const orderDetails = useSelector(store => store.ingredients.currentOrder)
+    if (Object.keys(orderDetails).length == 0) {
+        showOrder = false
+    }
     const user = useSelector(store => store.auth.user)
     const history = useHistory();
 
@@ -32,8 +38,8 @@ const BurgerConstructor = () => {
     function toggleOrderAccepted() {
         if(user.email) {
             if (addedIngredients.length > 0) {
-                if (orderDetails.success) {
-                    dispatch(removeFromOrderDetails());
+                if (showOrder) {
+                    dispatch(removeFromOrderDetails(123));
                 } else {
                     const ids = {
                         ingredients: addedIngredients.map((item) => item._id)
@@ -46,7 +52,6 @@ const BurgerConstructor = () => {
         } else {
             history.push("/login")
         }
-        
     }
 
     const price = addedIngredients.reduce(function (sum, current) {
@@ -57,17 +62,17 @@ const BurgerConstructor = () => {
         }
     }, bun.price * 2);
 
-    const onDropHandler = (itemId) => {
+    const onDropHandler = (itemId: TIngredient) => {
         const dropped = ingredients.find((item) => item._id === itemId._id);
         dispatch(addToConstructor(dropped));
     };
 
-    const onDeleteHandler = (itemDel) => {
+    const onDeleteHandler = (itemDel: TIngredient) => {
         const item = ingredients.find((item) => item._id === itemDel._id);
         dispatch(deleteFromConstructor(item));
     };
 
-    const moveIngredient = (dragIndex, hoverIndex) => {
+    const moveIngredient = (dragIndex: number, hoverIndex: number) => {
         const newIngredients = [...addedIngredients];
         const newItem = addedIngredients[dragIndex];
         newIngredients.splice(dragIndex, 1);
@@ -78,16 +83,16 @@ const BurgerConstructor = () => {
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(itemId) {
+        drop(itemId: TIngredient) {
             onDropHandler(itemId);
         },
     });
 
     return (
         <section className={styles.constructorBlock}>
-            {orderDetails.success && (
+            {showOrder && (
                 <OrderAccepted
-                    number={orderDetails.order.number}
+                    number={orderDetails.number}
                     toggleModal={toggleOrderAccepted}
                 />
             )}

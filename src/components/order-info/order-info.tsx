@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { fetchOrder } from "../../services/reducers/ingredientsSlice";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { format } from "date-fns";
@@ -9,17 +10,18 @@ import { ru } from 'date-fns/esm/locale';
 import styles from "./order-info.module.scss";
 
 const OrderInfo = () => {
-    const { id } = useParams();
+    const { id }: {id: string} = useParams();
     const dispatch = useDispatch();
     const ingredients = useSelector(store => store.ingredients.ingredients);
     const order = useSelector(store => store.ingredients.currentOrder);
     const [orderLoaded, setOrderLoaded] = useState(false);
 
     var totalPrice = 0;
-    var showed = [];
+    var showed: string[] = [];
 
     useEffect(() => {
         dispatch(fetchOrder(id))
+            // @ts-ignore
             .then((result) => {
                 if (result.payload.success) {
                     setOrderLoaded(true)
@@ -42,24 +44,26 @@ const OrderInfo = () => {
                     {order.ingredients.map((item, index) => {
                         const ingrInfo = ingredients.find(ingr => ingr._id === item);
                         const howMany = order.ingredients.filter(ingr => ingr === item).length;
-                        totalPrice += ingrInfo.price;
-                        if (!showed.includes(ingrInfo._id)) {
-                            showed.push(ingrInfo._id)
-                            return (
-                                <div key={index} className={styles.ingrLine}>
-                                    <div className={styles.miniIngr}>
-                                        <img
-                                            className={styles.miniIngrImage}
-                                            src={ingrInfo.image}
-                                        />
+                        if (ingrInfo) {
+                            totalPrice += ingrInfo.price;
+                            if (!showed.includes(ingrInfo._id)) {
+                                showed.push(ingrInfo._id)
+                                return (
+                                    <div key={index} className={styles.ingrLine}>
+                                        <div className={styles.miniIngr}>
+                                            <img
+                                                className={styles.miniIngrImage}
+                                                src={ingrInfo.image}
+                                            />
+                                        </div>
+                                        <span className="flex text text_type_main-default ml-4">{ingrInfo.name}</span>
+                                        <div className={`${styles.orderPriceForOne} text text_type_digits-default`}>
+                                            {howMany+' x '+ingrInfo.price}
+                                            <CurrencyIcon type="primary" />
+                                        </div>
                                     </div>
-                                    <span className="flex text text_type_main-default ml-4">{ingrInfo.name}</span>
-                                    <div className={`${styles.orderPriceForOne} text text_type_digits-default`}>
-                                        {howMany+' x '+ingrInfo.price}
-                                        <CurrencyIcon type="primary" />
-                                    </div>
-                                </div>
-                            );
+                                );
+                            } else return null;
                         } else return null;
                     })}
                     </div>

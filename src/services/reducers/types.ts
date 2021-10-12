@@ -10,16 +10,16 @@ type TIngredientsStore = {
     ingredients: TIngredient[];
     addedIngredients: TIngredient[];
     currentItem: TIngredient;
-    currentOrder: TOrderResponse;
+    currentOrder: TOrder;
 }
 
-type TOrderResponse = {
+export type TOrderResponse = {
     name: string;
     order: TOrder;
     success: boolean;
 }
 
-type TOrder = {
+export type TOrder = {
     createdAt: string
     ingredients: string[];
     name: string;
@@ -58,7 +58,7 @@ type TOrdersStore = {
     totalToday: number;
 }
 
-type TOrderSm = {
+export type TOrderSm = {
     createdAt: string;
     ingredients: string[];
     name: string;

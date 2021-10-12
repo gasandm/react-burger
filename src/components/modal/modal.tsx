@@ -1,33 +1,28 @@
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 import styles from "./modal.module.scss";
-import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { addToDetails, removeFromDetails, removeFromOrderDetails } from "../../services/reducers/ingredientsSlice";
+import { removeFromDetails, removeFromOrderDetails } from "../../services/reducers/ingredientsSlice";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useHistory } from "react-router-dom";
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
 
-const Modal = (props) => {
+const Modal = (props: { modalTitle?: string, children: JSX.Element }) => {
     const history = useHistory()
-    
-    function toggleDetails(item) {
-        if(item._id) {
-            dispatch(addToDetails(item))
-        } else {
-            dispatch(removeFromDetails())
-            dispatch(removeFromOrderDetails())
-            history.replace('/')
-        } 
+
+    function toggleDetails() {
+        dispatch(removeFromDetails(123))
+        dispatch(removeFromOrderDetails(123))
+        history.replace('/')
     }
     const dispatch = useDispatch()
 
     return ReactDOM.createPortal(
         <ModalOverlay toggleModal={toggleDetails}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                <div className={`${styles.details} text text_type_main-large`}>
+                <div className={`${styles.details} text 22 text_type_main-large`}>
                     <span>{props.modalTitle}</span>
                     <div
                         className={styles.closeButton}
@@ -41,10 +36,6 @@ const Modal = (props) => {
         </ModalOverlay>,
         modalRoot
     );
-};
-
-Modal.propTypes = {
-    modalTitle: PropTypes.string
 };
 
 export default Modal;

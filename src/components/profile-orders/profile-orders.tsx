@@ -1,6 +1,7 @@
 import { SideMenu } from "../side-menu/side-menu";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import IngredientIcons from "../ingredient-icons/ingredient-icons";
 import { Link, useLocation } from "react-router-dom";
 import { getCookie } from "../../utils/functions";
@@ -14,7 +15,7 @@ export default function ProfileOrders() {
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const aToken = getCookie("accessToken");
+    const aToken = getCookie("accessToken") as string;
     const accessToken = aToken.split("Bearer ")[1];
 
     useEffect(() => {

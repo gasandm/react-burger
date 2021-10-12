@@ -11,4 +11,12 @@ export type TIngredient = {
     qty: number;
     type: string;
     _id: string;
+    __v?: any
 };
+
+export interface ILocation {
+    state: string;
+    background: string;
+    from?: string;
+    push(a: string): void;
+}

@@ -1,13 +1,15 @@
 import { Route, Redirect, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useSelector } from "../../utils/hooks";
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 
 import { getUserDetails } from "../../services/reducers/authSlice";
+import { ILocation } from "../../utils/types";
 
-export function ProtectedAuthRoute({ children, ...rest }) {
+export function ProtectedAuthRoute({ children, path, ...rest }: {children: JSX.Element, path: string, exact: boolean}) {
     const user = useSelector((store) => store.auth.success);
     const dispatch = useDispatch()
-    const location = useLocation()
+    const location = useLocation<ILocation>()
 
     useEffect(() => {
         if (!user) {

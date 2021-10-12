@@ -2,7 +2,7 @@ import React from 'react';
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from 'redux-thunk'
 import rootReducer from "./services/reducers/rootReducer";
-import { wsMiddleware } from "./services/middleware/wsMiddleware";
+import { wsMiddleware } from "./services/middleware/wsMiddleware.js";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from 'react-dom';
 import App from './components/app/app';

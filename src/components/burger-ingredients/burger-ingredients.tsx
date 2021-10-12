@@ -5,16 +5,17 @@ import { addToDetails, removeFromDetails } from "../../services/reducers/ingredi
 import styles from "./burger-ingredients.module.scss";
 import Tabs from "../tabs/tabs";
 import IngredientSection from "../ingredient-section/ingredient-section";
+import { ILocation } from "../../utils/types";
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch()
-    const location = useLocation()
+    const location = useLocation<ILocation>()
     const [nearest, setNearest] = useState("bun");
 
-    const scrollContainerRef = useRef(null);
-    const bunRef = useRef(null);
-    const sauceRef = useRef(null);
-    const mainRef = useRef(null);
+    const scrollContainerRef = useRef(null) as any;
+    const bunRef = useRef(null) as any;
+    const sauceRef = useRef(null) as any;
+    const mainRef = useRef(null) as any;
 
     const handleScroll = () => {
         // Сравниваем расстояния от заголовков до верхней части скроллящегося контейнера
@@ -57,11 +58,12 @@ const BurgerIngredients = () => {
         ],
     };
 
-    function toggleDetails(item) {
+    function toggleDetails(item?: any) {
         if(item._id) {
             dispatch(addToDetails(item))
         } else {
-            dispatch(removeFromDetails())
+            dispatch(removeFromDetails(123))
+            // @ts-ignore
             location.push('/')
         } 
     }

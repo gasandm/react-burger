@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getCookie } from '../../utils/functions';
+import { TOrder, TOrderResponse, TReduxStore } from './types';
 
 const API = "https://norma.nomoreparties.space/api/ingredients";
 
@@ -27,11 +28,11 @@ const fetchIngredients = createAsyncThunk(
 
 const fetchOrderDetails = createAsyncThunk(
     'ingredients/fetchOrderDetails',
-    async (ids) => {
+    async (ids:{ingredients:string[]}) => {
         return await fetch('https://norma.nomoreparties.space/api/orders', {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': getCookie('accessToken')
+                'Authorization': getCookie('accessToken') as string
             },
             method: 'POST',
             body: JSON.stringify(ids)
@@ -53,7 +54,7 @@ const fetchOrderDetails = createAsyncThunk(
 
 const fetchOrder = createAsyncThunk(
     'ingredients/fetchOrder',
-    async (orderId) => {
+    async (orderId:string) => {
         return await fetch('https://norma.nomoreparties.space/api/orders/'+orderId, {
             headers: {
                 'Content-Type': 'application/json'
@@ -84,7 +85,8 @@ const ingredientsSlice = createSlice({
         currentOrder: {}
     },
     reducers: {
-        addToConstructor(state, action) {
+        // @ts-ignore
+        addToConstructor(state: TReduxStore["ingredients"], action) {
             const itemIndex = state.ingredients.findIndex(item => item._id === action.payload._id);
             if (action.payload.type !== 'bun') {
                 state.addedIngredients.push(action.payload);
@@ -97,7 +99,7 @@ const ingredientsSlice = createSlice({
                 } else {
                     //Обнуление счетчика у старой булки 
                     const oldBun = state.addedIngredients.find(item => item.type === 'bun');
-                    const oldBunIndex = state.ingredients.findIndex(item => item._id === oldBun._id);
+                    const oldBunIndex = state.ingredients.findIndex(item => item._id === oldBun?._id);
                     state.ingredients[oldBunIndex].__v === 1 ? state.ingredients[oldBunIndex].__v-- : state.ingredients[oldBunIndex].__v = 0;
                     //Смена булку на новую
                     state.addedIngredients[bunIndex] = action.payload;
@@ -106,7 +108,8 @@ const ingredientsSlice = createSlice({
                 state.ingredients[itemIndex].__v === 0 ? state.ingredients[itemIndex].__v++ : state.ingredients[itemIndex].__v = 1;
             }
         },
-        deleteFromConstructor(state, action) {
+        // @ts-ignore
+        deleteFromConstructor(state: TReduxStore["ingredients"], action) {
             const index = state.addedIngredients.findIndex(item => item._id === action.payload._id);
             state.addedIngredients.splice(index, 1);
             //Уменьшение счетчика
@@ -116,28 +119,28 @@ const ingredientsSlice = createSlice({
         addToDetails(state, action) {
             state.currentItem = action.payload;
         },
-        removeFromDetails(state) {
+        removeFromDetails(state, action) {
             state.currentItem = {};
         },
         addManyToConstructor(state, action) {
             state.addedIngredients = action.payload;
         },
-        removeFromOrderDetails(state) {
+        removeFromOrderDetails(state, action) {
             state.currentOrder = {};
         }
     },
-    extraReducers: {
-        [fetchIngredients.fulfilled]: (state, action) => {
-            state.ingredients.push(...action.payload);
-        },
-        [fetchOrderDetails.fulfilled]: (state, action) => {
+    extraReducers: (builder) => {
+        builder.addCase(fetchIngredients.fulfilled, (state, action) => {
+            state.ingredients = action.payload;
+        });
+        builder.addCase(fetchOrderDetails.fulfilled, (state, action) => {
             state.currentOrder = action.payload;
-        },
-        [fetchOrder.fulfilled]: (state, action) => {
-            state.currentOrder = action.payload.orders[0];
-        },
-    }
-});
+        });
+        builder.addCase(fetchOrder.fulfilled, (state, action) => {
+            state.currentOrder = action.payload.order;
+        })
+    }}
+);
 
 export default ingredientsSlice.reducer;
 export const { addToConstructor, deleteFromConstructor, addToDetails, removeFromDetails, addManyToConstructor, removeFromOrderDetails } = ingredientsSlice.actions;

@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import PropTypes from "prop-types";
 import styles from "./ingredient-in-constructor.module.scss";
 import {
     DragIcon,
     ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { TIngredientInConstructorProps } from "./types";
 
-const IngredientInConstructor = (props) => {
+const IngredientInConstructor = (props: TIngredientInConstructorProps) => {
     const { _id, image, price, name } = props.item;
     const { onDeleteHandler, moveIngredient, index } = props;
 
@@ -25,7 +25,7 @@ const IngredientInConstructor = (props) => {
 
     const [, drop] = useDrop({
         accept: "ingredientInner",
-        hover: (item, monitor) => {
+        hover: (item: {index:number}, monitor) => {
             if (!ref.current) {
                 return;
             }
@@ -34,13 +34,14 @@ const IngredientInConstructor = (props) => {
             if (dragIndex === hoverIndex) {
                 return;
             }
-            // Determine rectangle on screen
+            // @ts-ignore
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             // Get vertical middle
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             // Determine mouse position
             const clientOffset = monitor.getClientOffset();
             // Get pixels to the top
+            // @ts-ignore
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
             // Only perform the move when the mouse has crossed half of the items height
             // When dragging downwards, only move when the cursor is below 50%
@@ -79,13 +80,6 @@ const IngredientInConstructor = (props) => {
             />
         </div>
     );
-};
-
-IngredientInConstructor.propTypes = {
-    item: PropTypes.object.isRequired,
-    onDeleteHandler: PropTypes.func.isRequired,
-    moveIngredient: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
 };
 
 export default IngredientInConstructor;

@@ -1,12 +1,10 @@
 import { useEffect } from "react";
-import PropTypes from "prop-types";
 import styles from "./modal-overlay.module.scss";
 
-const ModalOverlay = (props) => {
-
+const ModalOverlay = (props: {toggleModal: () => void, children: JSX.Element}) => {
     useEffect(()=>{
-        const checkForEsc = (e) => {
-            if(e.key === 'Escape') props.toggleModal(e);
+        const checkForEsc = (e: KeyboardEvent) => {
+            if(e.key === 'Escape') props.toggleModal();
         }
         document.addEventListener("keydown", checkForEsc, false);
 
@@ -20,10 +18,6 @@ const ModalOverlay = (props) => {
             {props.children}
         </div>
     );
-};
-
-ModalOverlay.propTypes = {
-    toggleModal: PropTypes.func.isRequired
 };
 
 export default ModalOverlay;

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 
 import { refreshTokenFunc } from "../../services/reducers/authSlice";
 
-export function ProtectedRoute({ children, ...rest }) {
-    const [isTokenValidated, setIsTokenValidated] = useState(null)
+export function ProtectedRoute({ children, path: string, ...rest }: {children: JSX.Element, path: string, exact: boolean}) {
+    const [isTokenValidated, setIsTokenValidated] = useState(false)
     const [notAuth, setNotAuth] = useState(true)
 
     useEffect(() => {
@@ -13,7 +13,7 @@ export function ProtectedRoute({ children, ...rest }) {
                 if (result.success) {
                     setIsTokenValidated(true)
                 } else {
-                    setIsTokenValidated(null)
+                    setIsTokenValidated(false)
                 }
             })
             .catch((err) => {
@@ -21,7 +21,7 @@ export function ProtectedRoute({ children, ...rest }) {
             })
     }, []);
 
-    if (isTokenValidated === null && notAuth) { return <h2>Загружаем...</h2>; }
+    if (isTokenValidated === false && notAuth) { return <h2>Загружаем...</h2>; }
 
     return (
         <Route

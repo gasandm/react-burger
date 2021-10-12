@@ -26,7 +26,7 @@ const wsSlice = createSlice({
             state.total = action.payload.total
             state.totalToday = action.payload.totalToday
         },
-        wsClose(state, action) {
+        wsClose(state) {
             state.wsConnected = false
         }
     }
