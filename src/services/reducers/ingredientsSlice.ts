@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getCookie } from '../../utils/functions';
-import { TOrder, TOrderResponse, TReduxStore } from './types';
+import { TReduxStore } from './types';
 
 const API = "https://norma.nomoreparties.space/api/ingredients";
 

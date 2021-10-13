@@ -13,7 +13,7 @@ const OrderInfo = () => {
     const { id }: {id: string} = useParams();
     const dispatch = useDispatch();
     const ingredients = useSelector(store => store.ingredients.ingredients);
-    const order = useSelector(store => store.ingredients.currentOrder);
+    const order = useSelector(store => store.ingredients.currentOrder.order);
     const [orderLoaded, setOrderLoaded] = useState(false);
 
     var totalPrice = 0;

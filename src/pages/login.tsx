@@ -1,55 +1,41 @@
-import { useState, useRef } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
     Button,
     Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { register } from "../services/reducers/authSlice";
+import { login } from "../services/reducers/authSlice";
 
 import styles from "./pages.module.scss";
+import { TICons } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 
 
-export function RegisterPage() {
+export function LoginPage() {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const [value, setValue] = useState("");
-    const [passValue, setPassValue] = useState("");
-    const [nameValue, setNameValue] = useState("");
-    const [type, setType] = useState("password");
-    const [icon, setIcon] = useState("ShowIcon");
-    const inputRef = useRef(null);
+    const [value, setValue] = React.useState("");
+    const [passValue, setPassValue] = React.useState("");
+    const [icon, setIcon]: [icon: keyof TICons | undefined, setIcon: Function] = React.useState("ShowIcon");
+    const [type, setType]: [type: "text" | "password", setType: Function] = React.useState("password");
+    const inputRef = React.useRef(null);
     
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password");
         icon === "ShowIcon" ? setIcon("HideIcon") : setIcon("ShowIcon");
     };
 
-    const registerHandle = () => {
-        if(!value || !passValue || !nameValue) {
+    const loginHandle = () => {
+        if(!value || !passValue) {
             alert('Заполните все поля.')
             return false
         }
-        dispatch(register({email: value, password: passValue, name: nameValue}));
-        history.push('/')
+        dispatch(login({ email: value, password: passValue }));
     }
 
     return (
-        <div className={styles.mainRegister}>
-            <p className="text text_type_main-medium mb-6">Регистрация</p>
-            <div className={styles.inputWrapper}>
-                <Input
-                    type={"email"}
-                    placeholder={"Имя"}
-                    onChange={(e) => setNameValue(e.target.value)}
-                    value={nameValue}
-                    name={"name"}
-                    error={false}
-                    errorText={"Введите имя"}
-                    size={"default"}
-                />
-            </div>
+        <div className={styles.main}>
+            <p className="text text_type_main-medium mb-6">Вход</p>
             <div className={styles.inputWrapper}>
                 <Input
                     type={"email"}
@@ -71,21 +57,25 @@ export function RegisterPage() {
                     value={passValue}
                     placeholder={"Пароль"}
                     icon={icon}
-                    name={"password"}
+                    name={"name"}
                     error={false}
                     errorText={"Введите пароль"}
                     size={"default"}
                 />
             </div>
             <div className={styles.inputWrapper}>
-                <Button type="primary" size="default" onClick={registerHandle}>
-                    Зарегистрироваться
+                <Button type="primary" size="medium" onClick={loginHandle}>
+                    Войти
                 </Button>
             </div>
             <div className={styles.links}>
                 <p className="text text-center text_type_main-small text_color_inactive">
-                    Уже зарегистрированы?{" "}
-                    <Link to="/login">Войти</Link>
+                    Вы - новый пользователь?{" "}
+                    <Link to="/register">Зарегистрироваться</Link>
+                </p>
+                <p className="mt-15 text-center text text_type_main-small text_color_inactive">
+                    Забыли пароль?{" "}
+                    <Link to="/forgot-password">Восстановить пароль</Link>
                 </p>
             </div>
         </div>

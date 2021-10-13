@@ -3,7 +3,8 @@ import {
     Button,
     Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../utils/hooks";
 
 import { SideMenu } from "../components/side-menu/side-menu";
 
@@ -33,6 +34,7 @@ export function ProfilePage() {
 
     useEffect(() => {
         dispatch(getUserDetails())
+            // @ts-ignore
             .then((result) => {
                 if (result.payload.success) {
                     setUserLoaded(true)
@@ -88,10 +90,10 @@ export function ProfilePage() {
                         />
                     </div>
                     <div className={styles.inputWrapper}>
-                        <Button onClick={onResetHandle} type="secondary" size="default">
+                        <Button onClick={onResetHandle} type="secondary" size="medium">
                             Отмена
                         </Button>
-                        <Button onClick={editUserHandle} type="primary" size="default">
+                        <Button onClick={editUserHandle} type="primary" size="medium">
                             Сохранить
                         </Button>
                     </div>

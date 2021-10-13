@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCookie } from '../../utils/functions';
+import { getCookie, setCookie } from '../../utils/functions';
 
 const logoutAPI = "https://norma.nomoreparties.space/api/auth/logout";
 const loginAPI = "https://norma.nomoreparties.space/api/auth/login";
@@ -7,32 +7,9 @@ const registerAPI = "https://norma.nomoreparties.space/api/auth/register";
 const refreshAPI = "https://norma.nomoreparties.space/api/auth/token";
 const getUserAPI = "https://norma.nomoreparties.space/api/auth/user";
 
-function setCookie(name, value, props) {
-    props = props || {};
-    let exp = props.expires;
-    if (typeof exp == 'number' && exp) {
-        const d = new Date();
-        d.setTime(d.getTime() + exp * 1000);
-        exp = props.expires = d;
-    }
-    if (exp && exp.toUTCString) {
-        props.expires = exp.toUTCString();
-    }
-    value = encodeURIComponent(value);
-    let updatedCookie = name + '=' + value;
-    for (const propName in props) {
-        updatedCookie += '; ' + propName;
-        const propValue = props[propName];
-        if (propValue !== true) {
-            updatedCookie += '=' + propValue;
-        }
-    }
-    document.cookie = updatedCookie;
-} 
-
 const register = createAsyncThunk(
     'auth/register',
-    async (form) => {
+    async (form: object) => {
         return await fetch(registerAPI, {
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +39,7 @@ const register = createAsyncThunk(
 
 const login = createAsyncThunk(
     'auth/login',
-    async (form) => {
+    async (form: object) => {
         return await fetch(loginAPI, {
             headers: {
                 'Content-Type': 'application/json'
@@ -177,7 +154,7 @@ const getUserDetails = createAsyncThunk(
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': getCookie('accessToken')
+                'Authorization': getCookie('accessToken') as string
             }
         })
         .then((res) => {
@@ -195,7 +172,7 @@ const getUserDetails = createAsyncThunk(
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': getCookie('accessToken')
+                    'Authorization': getCookie('accessToken') as string
                 }
             })
         })
@@ -207,12 +184,12 @@ const getUserDetails = createAsyncThunk(
 );
 
 const setUserDetails = createAsyncThunk(
-    'auth/getUserDetails',
-    async (form) => {
+    'auth/setUserDetails',
+    async (form:object) => {
         return await fetch(getUserAPI, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': getCookie('accessToken')
+                'Authorization': getCookie('accessToken') as string
             },
             method: 'PATCH',
             body: JSON.stringify(form)
@@ -233,7 +210,10 @@ const authSlice = createSlice({
     name: "auth",
     initialState: {
         success: false,
-        user: {},
+        user: {
+            email: null,
+            name: null
+        },
         accessToken: '',
         refreshToken: '',
         forgot: false
@@ -243,44 +223,43 @@ const authSlice = createSlice({
             state.user = action.payload;
         }
     },
-    extraReducers: {
-        [register.fulfilled]: (state, action) => {
-            // не сработало через "..."
+    extraReducers: (builder) => {
+        builder.addCase(register.fulfilled, (state, action) => {
             state.user = action.payload.user
             state.success = action.payload.success
             state.accessToken = action.payload.accessToken
             state.refreshToken = action.payload.refreshToken
-        },
-        [login.fulfilled]: (state, action) => {
+        });
+        builder.addCase(login.fulfilled, (state, action) => {
             state.user = action.payload.user
             state.success = action.payload.success
             state.accessToken = action.payload.accessToken
             state.refreshToken = action.payload.refreshToken
-        },
-        [refreshToken.fulfilled]: (state, action) => {
+        });
+        builder.addCase(refreshToken.fulfilled, (state, action) => {
             state.success = action.payload.success
             state.accessToken = action.payload.accessToken
             state.refreshToken = action.payload.refreshToken
-        },
-        [logout.fulfilled]: (state, action) => {
+        });
+        builder.addCase(logout.fulfilled, (state, action) => {
             if(action.payload.success) {
-                state.user = {}
+                state.user = {} as any
                 state.success = false
                 state.accessToken = ''
                 state.refreshToken = ''
             }
-        },
-        [getUserDetails.fulfilled]: (state, action) => {
+        });
+        builder.addCase(getUserDetails.fulfilled, (state, action) => {
             if(action.payload.success) {
                 state.user.email = action.payload.user.email
                 state.user.name = action.payload.user.name
                 state.success = action.payload.success
             }
-        },
-        [setUserDetails.fulfilled]: (state, action) => {
+        });
+        builder.addCase(setUserDetails.fulfilled, (state, action) => {
             state.user = action.payload.user
             state.success = action.payload.success
-        },
+        });
     }
 });
 

@@ -1,40 +1,56 @@
-import React from "react";
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
     Button,
     Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { login } from "../services/reducers/authSlice";
+import { register } from "../services/reducers/authSlice";
 
 import styles from "./pages.module.scss";
+import { TICons } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 
 
-export function LoginPage() {
+export function RegisterPage() {
     const dispatch = useDispatch();
-    const [value, setValue] = React.useState("");
-    const [passValue, setPassValue] = React.useState("");
-    const [type, setType] = React.useState("password");
-    const [icon, setIcon] = React.useState("ShowIcon");
-    const inputRef = React.useRef(null);
+    const history = useHistory();
+    const [value, setValue] = useState("");
+    const [passValue, setPassValue] = useState("");
+    const [nameValue, setNameValue] = useState("");
+    const [type, setType]: [type: "text" | "password", setType: Function] = useState("password");
+    const [icon, setIcon]: [icon: keyof TICons | undefined, setIcon: Function] = useState("ShowIcon");
+    const inputRef = useRef(null);
     
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password");
         icon === "ShowIcon" ? setIcon("HideIcon") : setIcon("ShowIcon");
     };
 
-    const loginHandle = () => {
-        if(!value || !passValue) {
+    const registerHandle = () => {
+        if(!value || !passValue || !nameValue) {
             alert('Заполните все поля.')
             return false
         }
-        dispatch(login({ email: value, password: passValue }));
+        dispatch(register({email: value, password: passValue, name: nameValue}));
+        history.push('/')
     }
 
     return (
-        <div className={styles.main}>
-            <p className="text text_type_main-medium mb-6">Вход</p>
+        <div className={styles.mainRegister}>
+            <p className="text text_type_main-medium mb-6">Регистрация</p>
+            <div className={styles.inputWrapper}>
+                <Input
+                    type={"email"}
+                    placeholder={"Имя"}
+                    onChange={(e) => setNameValue(e.target.value)}
+                    value={nameValue}
+                    name={"name"}
+                    error={false}
+                    errorText={"Введите имя"}
+                    size={"default"}
+                />
+            </div>
             <div className={styles.inputWrapper}>
                 <Input
                     type={"email"}
@@ -56,25 +72,21 @@ export function LoginPage() {
                     value={passValue}
                     placeholder={"Пароль"}
                     icon={icon}
-                    name={"name"}
+                    name={"password"}
                     error={false}
                     errorText={"Введите пароль"}
                     size={"default"}
                 />
             </div>
             <div className={styles.inputWrapper}>
-                <Button type="primary" size="default" onClick={loginHandle}>
-                    Войти
+                <Button type="primary" size="medium" onClick={registerHandle}>
+                    Зарегистрироваться
                 </Button>
             </div>
             <div className={styles.links}>
                 <p className="text text-center text_type_main-small text_color_inactive">
-                    Вы - новый пользователь?{" "}
-                    <Link to="/register">Зарегистрироваться</Link>
-                </p>
-                <p className="mt-15 text-center text text_type_main-small text_color_inactive">
-                    Забыли пароль?{" "}
-                    <Link to="/forgot-password">Восстановить пароль</Link>
+                    Уже зарегистрированы?{" "}
+                    <Link to="/login">Войти</Link>
                 </p>
             </div>
         </div>

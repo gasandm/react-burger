@@ -6,13 +6,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./pages.module.scss";
+import { TICons } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 
 export function ResetPassword() {
     const forgotPassAPI = "https://norma.nomoreparties.space/api/password-reset";
     const [value, setValue] = useState("")
     const [passValue, setPassValue] = useState("")
-    const [type, setType] = useState("password")
-    const [icon, setIcon] = useState("ShowIcon")
+    const [icon, setIcon]: [icon: keyof TICons | undefined, setIcon: Function] = useState("ShowIcon");
+    const [type, setType]: [type: "text" | "password", setType: Function] = useState("password");
     const inputRef = useRef(null)
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password")
@@ -78,7 +79,7 @@ export function ResetPassword() {
                     />
                 </div>
                 <div className={styles.inputWrapper}>
-                    <Button onClick={onResetHandle} type="primary" size="default">
+                    <Button onClick={onResetHandle} type="primary" size="medium">
                         Сохранить
                     </Button>
                 </div>

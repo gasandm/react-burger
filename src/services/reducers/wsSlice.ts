@@ -15,10 +15,10 @@ const wsSlice = createSlice({
             state.total = action.payload.total
             state.totalToday = action.payload.totalToday
         },
-        wsConnectionSuccess(state, action) {
+        wsConnectionSuccess(state) {
             state.wsConnected = true
         },
-        wsConnectionError(state, action) {
+        wsConnectionError(state) {
             state.wsConnected = false
         },
         wsGetMessage(state, action) {

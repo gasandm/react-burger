@@ -54,7 +54,7 @@ export function ForgotPassword() {
                 />
             </div>
             <div className={styles.inputWrapper}>
-                <Button onClick={onForgotHandle} type="primary" size="default">
+                <Button onClick={onForgotHandle} type="primary" size="medium">
                     Восстановить
                 </Button>
             </div>

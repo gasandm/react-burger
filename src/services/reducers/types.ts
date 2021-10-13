@@ -10,7 +10,7 @@ type TIngredientsStore = {
     ingredients: TIngredient[];
     addedIngredients: TIngredient[];
     currentItem: TIngredient;
-    currentOrder: TOrder;
+    currentOrder: TOrderResponse;
 }
 
 export type TOrderResponse = {

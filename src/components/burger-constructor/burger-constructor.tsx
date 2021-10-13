@@ -26,7 +26,7 @@ const BurgerConstructor = () => {
     const addedIngredients = useSelector(store => store.ingredients.addedIngredients)
     let showOrder = true
     const orderDetails = useSelector(store => store.ingredients.currentOrder)
-    if (Object.keys(orderDetails).length == 0) {
+    if (Object.keys(orderDetails).length === 0) {
         showOrder = false
     }
     const user = useSelector(store => store.auth.user)
@@ -92,7 +92,7 @@ const BurgerConstructor = () => {
         <section className={styles.constructorBlock}>
             {showOrder && (
                 <OrderAccepted
-                    number={orderDetails.number}
+                    number={orderDetails.order.number}
                     toggleModal={toggleOrderAccepted}
                 />
             )}

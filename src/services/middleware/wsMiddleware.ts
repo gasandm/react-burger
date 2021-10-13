@@ -5,29 +5,29 @@ import {
     wsClose,
 } from "../reducers/wsSlice";
 
-export const wsMiddleware = (store) => {
-    let socket = null;
+export const wsMiddlewareF = (store: any) => {
+    let socket: any = null;
 
-    return (next) => (action) => {
+    return (next: Function) => (action: {type: string, payload: string}) => {
         const { dispatch } = store;
         const { type, payload } = action;
         if (type === "orders/wsGetOrders") {
             socket = new WebSocket(payload);
         }
         if (socket) {
-            socket.onopen = (event) => {
+            socket.onopen = () => {
                 dispatch(wsConnectionSuccess());
             };
-            socket.onerror = (event) => {
+            socket.onerror = () => {
                 dispatch(wsConnectionError());
             };
-            socket.onmessage = (event) => {
+            socket.onmessage = (event: {data: string}) => {
                 const { data } = event;
                 const parsedData = JSON.parse(data);
                 const { success, ...restParsedData } = parsedData;
                 dispatch(wsGetMessage(restParsedData));
             };
-            socket.onclose = (event) => {
+            socket.onclose = () => {
                 dispatch(wsClose());
             };
             if (type === "orders/wsGetMessage") {
