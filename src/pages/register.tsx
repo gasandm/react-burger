@@ -27,7 +27,8 @@ export function RegisterPage() {
         icon === "ShowIcon" ? setIcon("HideIcon") : setIcon("ShowIcon");
     };
 
-    const registerHandle = () => {
+    const registerHandle = (e: any) => {
+        e.preventDefault();
         if (!value || !passValue || !nameValue) {
             alert('Заполните все поля.')
             return false

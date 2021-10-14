@@ -23,7 +23,8 @@ export function ResetPassword() {
     const history = useHistory()
     const isForgot = localStorage.getItem('isForgot')
 
-    const onResetHandle = () => {
+    const onResetHandle = (e: any) => {
+        e.preventDefault();
         fetch(`${forgotPassAPI}/reset`, {
             headers: {
                 'Content-Type': 'application/json'

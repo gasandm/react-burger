@@ -14,7 +14,8 @@ export function ForgotPassword() {
     const history = useHistory()
     const [value, setValue] = useState("")
 
-    const onForgotHandle = () => {
+    const onForgotHandle = (e: any) => {
+        e.preventDefault();
         fetch(forgotPassAPI, {
             headers: {
                 'Content-Type': 'application/json'

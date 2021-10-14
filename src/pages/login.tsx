@@ -25,7 +25,8 @@ export function LoginPage() {
         icon === "ShowIcon" ? setIcon("HideIcon") : setIcon("ShowIcon");
     };
 
-    const loginHandle = () => {
+    const loginHandle = (e: any) => {
+        e.preventDefault();
         if (!value || !passValue) {
             alert('Заполните все поля.')
             return false
