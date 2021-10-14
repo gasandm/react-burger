@@ -1,5 +1,5 @@
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import { logout } from "../../services/reducers/authSlice";
 
 import styles from "./side-menu.module.scss";
@@ -10,7 +10,7 @@ export function SideMenu() {
     const history = useHistory();
 
     const logoutHandle = () => {
-        dispatch(logout())
+        dispatch<any>(logout())
         history.push("/login")
     }
 

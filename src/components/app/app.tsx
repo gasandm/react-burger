@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -29,7 +29,7 @@ const App: React.FC = () => {
     const background: any = history.action === 'PUSH' && location.state && location.state.background
 
     React.useEffect(() => {
-        dispatch(fetchIngredients());
+        dispatch<any>(fetchIngredients());
     }, [dispatch]);
 
     return (

@@ -1,4 +1,5 @@
 import {
+    wsGetOrders,
     wsConnectionSuccess,
     wsConnectionError,
     wsGetMessage,
@@ -11,7 +12,7 @@ export const wsMiddlewareF = (store: any) => {
     return (next: Function) => (action: {type: string, payload: string}) => {
         const { dispatch } = store;
         const { type, payload } = action;
-        if (type === "orders/wsGetOrders") {
+        if (type === wsGetOrders.type) {
             socket = new WebSocket(payload);
         }
         if (socket) {
@@ -30,11 +31,11 @@ export const wsMiddlewareF = (store: any) => {
             socket.onclose = () => {
                 dispatch(wsClose());
             };
-            if (type === "orders/wsGetMessage") {
+            if (type === wsGetMessage.type) {
                 const message = payload;
                 socket.send(JSON.stringify(message));
             }
-            if (type === "orders/wsClose") {
+            if (type === wsClose.type) {
                 socket.close();
             }
         }

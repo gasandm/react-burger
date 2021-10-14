@@ -1,16 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getCookie, setCookie } from '../../utils/functions';
 
-const logoutAPI = "https://norma.nomoreparties.space/api/auth/logout";
-const loginAPI = "https://norma.nomoreparties.space/api/auth/login";
-const registerAPI = "https://norma.nomoreparties.space/api/auth/register";
-const refreshAPI = "https://norma.nomoreparties.space/api/auth/token";
-const getUserAPI = "https://norma.nomoreparties.space/api/auth/user";
+const API = "https://norma.nomoreparties.space/api/auth/";
 
 const register = createAsyncThunk(
     'auth/register',
     async (form: object) => {
-        return await fetch(registerAPI, {
+        return await fetch(API+'register', {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -40,7 +36,7 @@ const register = createAsyncThunk(
 const login = createAsyncThunk(
     'auth/login',
     async (form: object) => {
-        return await fetch(loginAPI, {
+        return await fetch(API+'login', {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -73,7 +69,7 @@ const login = createAsyncThunk(
 const logout = createAsyncThunk(
     'auth/logout',
     async () => {
-        return await fetch(logoutAPI, {
+        return await fetch(API+'logout', {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -84,7 +80,7 @@ const logout = createAsyncThunk(
         })
         .then((res) => {
             if (!res.ok) return Promise.reject(`Не удалось выйти из системы. Ошибка ${res.status}`)
-            setCookie('accessToken', null)
+            setCookie('accessToken', '')
             localStorage.removeItem('refreshToken')
             return res.json();
         })
@@ -101,7 +97,7 @@ const logout = createAsyncThunk(
 const refreshToken = createAsyncThunk(
     'auth/refreshToken',
     async () => {
-        return await fetch(refreshAPI, {
+        return await fetch(API+'token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -127,7 +123,7 @@ const refreshToken = createAsyncThunk(
 );
 
 const refreshTokenFunc = async () => {
-    return await fetch(refreshAPI, {
+    return await fetch(API+'token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -150,7 +146,7 @@ const refreshTokenFunc = async () => {
 const getUserDetails = createAsyncThunk(
     'auth/getUserDetails',
     async () => {
-        return await fetch(getUserAPI, {
+        return await fetch(API+'user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -168,7 +164,7 @@ const getUserDetails = createAsyncThunk(
             return Promise.reject(err);
         })
         .then(res => {
-            return fetch(getUserAPI, {
+            return fetch(API+'user', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -186,7 +182,7 @@ const getUserDetails = createAsyncThunk(
 const setUserDetails = createAsyncThunk(
     'auth/setUserDetails',
     async (form:object) => {
-        return await fetch(getUserAPI, {
+        return await fetch(API+'user', {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': getCookie('accessToken') as string

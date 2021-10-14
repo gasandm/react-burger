@@ -1,7 +1,6 @@
 import { SideMenu } from "../side-menu/side-menu";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../utils/hooks";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import IngredientIcons from "../ingredient-icons/ingredient-icons";
 import { Link, useLocation } from "react-router-dom";
 import { getCookie } from "../../utils/functions";

@@ -3,8 +3,7 @@ import {
     Button,
     Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
-import { useSelector } from "../utils/hooks";
+import { useSelector, useDispatch } from "../utils/hooks";
 
 import { SideMenu } from "../components/side-menu/side-menu";
 
@@ -22,8 +21,9 @@ export function ProfilePage() {
     const inputRef = useRef(null)
     const [userLoaded, setUserLoaded] = useState(false)
 
-    const editUserHandle = () => {
-        dispatch(setUserDetails({ email: value, name: nameValue, password: passValue }))
+    const editUserHandle = (e: any) => {
+        e.preventDefault();
+        dispatch<any>(setUserDetails({ email: value, name: nameValue, password: passValue }))
     }
 
     const onResetHandle = () => {
@@ -33,10 +33,10 @@ export function ProfilePage() {
     }
 
     useEffect(() => {
-        dispatch(getUserDetails())
+        dispatch<any>(getUserDetails())
             // @ts-ignore
             .then((result) => {
-                if (result.payload.success) {
+                if (result.payload?.success) {
                     setUserLoaded(true)
                 } else {
                     setUserLoaded(false)
@@ -49,46 +49,48 @@ export function ProfilePage() {
             <div className={styles.mainProfile}>
                 <SideMenu />
                 <div className={styles.inputMainWrapper}>
-                    <div className={styles.inputWrapper}>
-                        <Input
-                            type={"text"}
-                            placeholder={"Имя"}
-                            onChange={(e) => setNameValue(e.target.value)}
-                            value={nameValue}
-                            name={"name"}
-                            icon={"EditIcon"}
-                            error={false}
-                            errorText={"Введите имя"}
-                            size={"default"}
-                        />
-                    </div>
-                    <div className={styles.inputWrapper}>
-                        <Input
-                            type={"email"}
-                            placeholder={"E-mail"}
-                            onChange={(e) => setValue(e.target.value)}
-                            value={value}
-                            name={"email"}
-                            icon={"EditIcon"}
-                            error={false}
-                            errorText={"Введите e-mail"}
-                            size={"default"}
-                        />
-                    </div>
-                    <div className={styles.inputWrapper}>
-                        <Input
-                            type={"password"}
-                            ref={inputRef}
-                            onChange={(e) => setPassValue(e.target.value)}
-                            value={passValue}
-                            placeholder={"Пароль"}
-                            icon={"EditIcon"}
-                            name={"password"}
-                            error={false}
-                            errorText={"Введите пароль"}
-                            size={"default"}
-                        />
-                    </div>
+                    <form onSubmit={editUserHandle}>
+                        <div className={styles.inputWrapper}>
+                            <Input
+                                type={"text"}
+                                placeholder={"Имя"}
+                                onChange={(e) => setNameValue(e.target.value)}
+                                value={nameValue}
+                                name={"name"}
+                                icon={"EditIcon"}
+                                error={false}
+                                errorText={"Введите имя"}
+                                size={"default"}
+                            />
+                        </div>
+                        <div className={styles.inputWrapper}>
+                            <Input
+                                type={"email"}
+                                placeholder={"E-mail"}
+                                onChange={(e) => setValue(e.target.value)}
+                                value={value}
+                                name={"email"}
+                                icon={"EditIcon"}
+                                error={false}
+                                errorText={"Введите e-mail"}
+                                size={"default"}
+                            />
+                        </div>
+                        <div className={styles.inputWrapper}>
+                            <Input
+                                type={"password"}
+                                ref={inputRef}
+                                onChange={(e) => setPassValue(e.target.value)}
+                                value={passValue}
+                                placeholder={"Пароль"}
+                                icon={"EditIcon"}
+                                name={"password"}
+                                error={false}
+                                errorText={"Введите пароль"}
+                                size={"default"}
+                            />
+                        </div>
+                    </form>
                     <div className={styles.inputWrapper}>
                         <Button onClick={onResetHandle} type="secondary" size="medium">
                             Отмена
@@ -102,6 +104,6 @@ export function ProfilePage() {
         ) : (
             null
         )
-        
+
     );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../utils/hooks";
 import { Link } from "react-router-dom";
 import {
     Button,
@@ -19,50 +19,52 @@ export function LoginPage() {
     const [icon, setIcon]: [icon: keyof TICons | undefined, setIcon: Function] = React.useState("ShowIcon");
     const [type, setType]: [type: "text" | "password", setType: Function] = React.useState("password");
     const inputRef = React.useRef(null);
-    
+
     const onIconClick = () => {
         type === "password" ? setType("text") : setType("password");
         icon === "ShowIcon" ? setIcon("HideIcon") : setIcon("ShowIcon");
     };
 
     const loginHandle = () => {
-        if(!value || !passValue) {
+        if (!value || !passValue) {
             alert('Заполните все поля.')
             return false
         }
-        dispatch(login({ email: value, password: passValue }));
+        dispatch<any>(login({ email: value, password: passValue }));
     }
 
     return (
         <div className={styles.main}>
             <p className="text text_type_main-medium mb-6">Вход</p>
-            <div className={styles.inputWrapper}>
-                <Input
-                    type={"email"}
-                    placeholder={"E-mail"}
-                    onChange={(e) => setValue(e.target.value)}
-                    value={value}
-                    name={"email"}
-                    error={false}
-                    errorText={"Введите e-mail"}
-                    size={"default"}
-                />
-            </div>
-            <div className={styles.inputWrapper}>
-                <Input
-                    type={type}
-                    ref={inputRef}
-                    onIconClick={onIconClick}
-                    onChange={(e) => setPassValue(e.target.value)}
-                    value={passValue}
-                    placeholder={"Пароль"}
-                    icon={icon}
-                    name={"name"}
-                    error={false}
-                    errorText={"Введите пароль"}
-                    size={"default"}
-                />
-            </div>
+            <form onSubmit={loginHandle}>
+                <div className={styles.inputWrapper}>
+                    <Input
+                        type={"email"}
+                        placeholder={"E-mail"}
+                        onChange={(e) => setValue(e.target.value)}
+                        value={value}
+                        name={"email"}
+                        error={false}
+                        errorText={"Введите e-mail"}
+                        size={"default"}
+                    />
+                </div>
+                <div className={styles.inputWrapper}>
+                    <Input
+                        type={type}
+                        ref={inputRef}
+                        onIconClick={onIconClick}
+                        onChange={(e) => setPassValue(e.target.value)}
+                        value={passValue}
+                        placeholder={"Пароль"}
+                        icon={icon}
+                        name={"name"}
+                        error={false}
+                        errorText={"Введите пароль"}
+                        size={"default"}
+                    />
+                </div>
+            </form>
             <div className={styles.inputWrapper}>
                 <Button type="primary" size="medium" onClick={loginHandle}>
                     Войти

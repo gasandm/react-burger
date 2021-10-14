@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import { useLocation } from "react-router-dom";
 import { addToDetails, removeFromDetails } from "../../services/reducers/ingredientsSlice";
 import styles from "./burger-ingredients.module.scss";
@@ -62,7 +62,7 @@ const BurgerIngredients = () => {
         if(item._id) {
             dispatch(addToDetails(item))
         } else {
-            dispatch(removeFromDetails(123))
+            dispatch(removeFromDetails(0))
             // @ts-ignore
             location.push('/')
         } 

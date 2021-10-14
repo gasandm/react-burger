@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../utils/hooks";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { fetchOrder } from "../../services/reducers/ingredientsSlice";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { format } from "date-fns";
@@ -20,7 +19,7 @@ const OrderInfo = () => {
     var showed: string[] = [];
 
     useEffect(() => {
-        dispatch(fetchOrder(id))
+        dispatch<any>(fetchOrder(id))
             // @ts-ignore
             .then((result) => {
                 if (result.payload.success) {

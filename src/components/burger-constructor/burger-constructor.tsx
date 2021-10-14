@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../utils/hooks";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { useDrop } from "react-dnd";
 import {
     ConstructorElement,
@@ -39,12 +38,12 @@ const BurgerConstructor = () => {
         if(user.email) {
             if (addedIngredients.length > 0) {
                 if (showOrder) {
-                    dispatch(removeFromOrderDetails(123));
+                    dispatch(removeFromOrderDetails(0));
                 } else {
                     const ids = {
                         ingredients: addedIngredients.map((item) => item._id)
                     };
-                    dispatch(fetchOrderDetails(ids));
+                    dispatch<any>(fetchOrderDetails(ids));
                 }
             } else {
                 alert("Добавьте ингредиенты в конструктор");

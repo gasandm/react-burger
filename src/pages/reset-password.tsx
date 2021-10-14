@@ -29,55 +29,57 @@ export function ResetPassword() {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify({password: passValue, token: value})
+            body: JSON.stringify({ password: passValue, token: value })
         })
-        .then((res) => {
-            if (!res.ok) return Promise.reject(`Не удалось сбросить пароль. Ошибка ${res.status}`)
+            .then((res) => {
+                if (!res.ok) return Promise.reject(`Не удалось сбросить пароль. Ошибка ${res.status}`)
 
-            return res.json();
-        })
-        .then((res) => {
-            localStorage.setItem('isForgot', '0')
-            history.push("/login")
-            return res;
-        })
-        .catch((error) => {
-            alert(error);
-            return false;
-        })
+                return res.json();
+            })
+            .then((res) => {
+                localStorage.setItem('isForgot', '0')
+                history.push("/login")
+                return res;
+            })
+            .catch((error) => {
+                alert(error);
+                return false;
+            })
     }
 
     return (
         isForgot === '1' ? (
             <div className={styles.main}>
                 <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
-                <div className={styles.inputWrapper}>
-                    <Input
-                        type={type}
-                        ref={inputRef}
-                        onIconClick={onIconClick}
-                        onChange={(e) => setPassValue(e.target.value)}
-                        value={passValue}
-                        placeholder={"Введите новый пароль"}
-                        icon={icon}
-                        name={"name"}
-                        error={false}
-                        errorText={"Введите пароль"}
-                        size={"default"}
-                    />
-                </div>
-                <div className={styles.inputWrapper}>
-                    <Input
-                        type={"text"}
-                        placeholder={"Введите код из письма"}
-                        onChange={(e) => setValue(e.target.value)}
-                        value={value}
-                        name={"name"}
-                        error={false}
-                        errorText={"Введите код"}
-                        size={"default"}
-                    />
-                </div>
+                <form onSubmit={onResetHandle}>
+                    <div className={styles.inputWrapper}>
+                        <Input
+                            type={type}
+                            ref={inputRef}
+                            onIconClick={onIconClick}
+                            onChange={(e) => setPassValue(e.target.value)}
+                            value={passValue}
+                            placeholder={"Введите новый пароль"}
+                            icon={icon}
+                            name={"name"}
+                            error={false}
+                            errorText={"Введите пароль"}
+                            size={"default"}
+                        />
+                    </div>
+                    <div className={styles.inputWrapper}>
+                        <Input
+                            type={"text"}
+                            placeholder={"Введите код из письма"}
+                            onChange={(e) => setValue(e.target.value)}
+                            value={value}
+                            name={"name"}
+                            error={false}
+                            errorText={"Введите код"}
+                            size={"default"}
+                        />
+                    </div>
+                </form>
                 <div className={styles.inputWrapper}>
                     <Button onClick={onResetHandle} type="primary" size="medium">
                         Сохранить
@@ -89,12 +91,12 @@ export function ResetPassword() {
                     </p>
                 </div>
             </div>
-          ) : (
+        ) : (
             <Redirect
-              to={{
-                pathname: '/forgot-password'
-              }}
-              />
-            )
+                to={{
+                    pathname: '/forgot-password'
+                }}
+            />
+        )
     );
 }

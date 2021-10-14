@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import styles from "./modal.module.scss";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { removeFromDetails, removeFromOrderDetails } from "../../services/reducers/ingredientsSlice";
@@ -13,8 +13,8 @@ const Modal = (props: { modalTitle?: string, children: JSX.Element }) => {
     const history = useHistory()
 
     function toggleDetails() {
-        dispatch(removeFromDetails(123))
-        dispatch(removeFromOrderDetails(123))
+        dispatch(removeFromDetails(0))
+        dispatch(removeFromOrderDetails(0))
         history.replace('/')
     }
     const dispatch = useDispatch()

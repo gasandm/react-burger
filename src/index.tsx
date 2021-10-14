@@ -14,6 +14,9 @@ const store = configureStore({
   middleware: [thunk, wsMiddleware]
 });
 
+export type AppDispatch = typeof store.dispatch;
+export type TReduxStore = ReturnType<typeof store.getState>
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
