@@ -14,6 +14,7 @@ const AppHeader = () => {
                 <ul className={styles.navUl}>
                     <li className={styles.navElement}>
                         <NavLink
+                            exact={true}
                             to={{ pathname: "/" }}
                             className="text_color_inactive"
                             activeClassName={styles.activeLink}
@@ -30,6 +31,7 @@ const AppHeader = () => {
                     </li>
                     <li className={styles.navElement}>
                         <NavLink
+                            exact={true}
                             to={{ pathname: "/feed" }}
                             className="text_color_inactive"
                             activeClassName={styles.activeLink}
@@ -51,6 +53,7 @@ const AppHeader = () => {
                     </li>
                     <li className={styles.navElement}>
                         <NavLink
+                            exact={true}
                             to={{ pathname: "/profile/orders" }}
                             className="text_color_inactive"
                             activeClassName={styles.activeLink}

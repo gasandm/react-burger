@@ -17,6 +17,7 @@ export function SideMenu() {
     return (
         <div className={styles.linksWrapper}>
             <NavLink
+                exact={true}
                 to={{ pathname: "/profile" }}
                 className='text_color_inactive'
                 activeClassName={styles.activeLink}
@@ -24,6 +25,7 @@ export function SideMenu() {
                 <span className={`${styles.profileLink} text text_type_main-default`}>Профиль</span>
             </NavLink>
             <NavLink
+                exact={true}
                 to={{ pathname: "/profile/orders" }}
                 className='text_color_inactive'
                 activeClassName={styles.activeLink}

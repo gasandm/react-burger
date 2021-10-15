@@ -55,7 +55,7 @@ export function ProfilePage() {
                                 type={"text"}
                                 placeholder={"Имя"}
                                 onChange={(e) => setNameValue(e.target.value)}
-                                value={nameValue}
+                                value={nameValue || ''}
                                 name={"name"}
                                 icon={"EditIcon"}
                                 error={false}
@@ -68,7 +68,7 @@ export function ProfilePage() {
                                 type={"email"}
                                 placeholder={"E-mail"}
                                 onChange={(e) => setValue(e.target.value)}
-                                value={value}
+                                value={value || ''}
                                 name={"email"}
                                 icon={"EditIcon"}
                                 error={false}
