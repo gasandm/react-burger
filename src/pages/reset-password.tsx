@@ -81,7 +81,7 @@ export function ResetPassword() {
                         />
                     </div>
                     <div className={styles.inputWrapper}>
-                        <Button onClick={onResetHandle} type="primary" size="medium">
+                        <Button type="primary" size="medium">
                             Сохранить
                         </Button>
                     </div>

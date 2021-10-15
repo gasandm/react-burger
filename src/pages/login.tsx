@@ -66,7 +66,7 @@ export function LoginPage() {
                     />
                 </div>
                 <div className={styles.inputWrapper}>
-                    <Button type="primary" size="medium" onClick={loginHandle}>
+                    <Button type="primary" size="medium">
                         Войти
                     </Button>
                 </div>

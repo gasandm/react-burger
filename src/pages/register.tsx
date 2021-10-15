@@ -81,7 +81,7 @@ export function RegisterPage() {
                     />
                 </div>
                 <div className={styles.inputWrapper}>
-                    <Button type="primary" size="medium" onClick={registerHandle}>
+                    <Button type="primary" size="medium">
                         Зарегистрироваться
                     </Button>
                 </div>
