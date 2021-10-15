@@ -2,7 +2,7 @@ import React from 'react';
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from 'redux-thunk'
 import rootReducer from "./services/reducers/rootReducer";
-import { wsMiddleware } from "./services/middleware/wsMiddleware";
+import { wsMiddleware } from "./services/middleware";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
@@ -13,6 +13,9 @@ const store = configureStore({
   reducer: rootReducer,
   middleware: [thunk, wsMiddleware]
 });
+
+export type AppDispatch = typeof store.dispatch;
+export type TReduxStore = ReturnType<typeof store.getState>
 
 ReactDOM.render(
   <React.StrictMode>
