@@ -47,6 +47,17 @@ const App: React.FC = () => {
                         </DndProvider>
                     </main>
                 </Route>
+                <Route path="/react-burger/" exact={true}>
+                    <main className={styles.burgerTable}>
+                        <span className="text text_type_main-large mt-40">
+                            Соберите бургер
+                        </span>
+                        <DndProvider backend={HTML5Backend}>
+                            <BurgerIngridients />
+                            <BurgerConstructor />
+                        </DndProvider>
+                    </main>
+                </Route>
                 <Route path="/ingredients/:id" exact={true}>
                     <IngredientPage />
                 </Route>
