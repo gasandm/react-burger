@@ -80,12 +80,12 @@ export function RegisterPage() {
                         size={"default"}
                     />
                 </div>
+                <div className={styles.inputWrapper}>
+                    <Button type="primary" size="medium" onClick={registerHandle}>
+                        Зарегистрироваться
+                    </Button>
+                </div>
             </form>
-            <div className={styles.inputWrapper}>
-                <Button type="primary" size="medium" onClick={registerHandle}>
-                    Зарегистрироваться
-                </Button>
-            </div>
             <div className={styles.links}>
                 <p className="text text-center text_type_main-small text_color_inactive">
                     Уже зарегистрированы?{" "}

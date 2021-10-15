@@ -65,12 +65,12 @@ export function LoginPage() {
                         size={"default"}
                     />
                 </div>
+                <div className={styles.inputWrapper}>
+                    <Button type="primary" size="medium" onClick={loginHandle}>
+                        Войти
+                    </Button>
+                </div>
             </form>
-            <div className={styles.inputWrapper}>
-                <Button type="primary" size="medium" onClick={loginHandle}>
-                    Войти
-                </Button>
-            </div>
             <div className={styles.links}>
                 <p className="text text-center text_type_main-small text_color_inactive">
                     Вы - новый пользователь?{" "}

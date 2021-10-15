@@ -80,12 +80,12 @@ export function ResetPassword() {
                             size={"default"}
                         />
                     </div>
+                    <div className={styles.inputWrapper}>
+                        <Button onClick={onResetHandle} type="primary" size="medium">
+                            Сохранить
+                        </Button>
+                    </div>
                 </form>
-                <div className={styles.inputWrapper}>
-                    <Button onClick={onResetHandle} type="primary" size="medium">
-                        Сохранить
-                    </Button>
-                </div>
                 <div className={styles.links}>
                     <p className="text text-center text_type_main-small text_color_inactive">
                         Вспомнили пароль? <Link to="/login">Войти</Link>

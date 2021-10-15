@@ -55,12 +55,12 @@ export function ForgotPassword() {
                         size={"default"}
                     />
                 </div>
+                <div className={styles.inputWrapper}>
+                    <Button onClick={onForgotHandle} type="primary" size="medium">
+                        Восстановить
+                    </Button>
+                </div>
             </form>
-            <div className={styles.inputWrapper}>
-                <Button onClick={onForgotHandle} type="primary" size="medium">
-                    Восстановить
-                </Button>
-            </div>
             <div className={styles.links}>
                 <p className="text text-center text_type_main-small text_color_inactive">
                     Вспомнили пароль?{" "}
