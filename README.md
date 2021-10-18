@@ -17,6 +17,9 @@ TypeScript, React.js (Сборка CRA), JS (ES6), Git, HTML5, CSS3 (CSS Modules
 Приложение разрабатывалось мною в рамках интенсива ["React Developer"](https://praktikum.yandex.ru/react/) от Яндекс.Практикума. 
 Обучение было разбито на 4 спринта (2-3 недели каждый). В каждом спринте было своё ТЗ, защита которого осуществлялась через код-ревью, где обозначались моменты для исправления/улучшения кода. В каждом этапе предусматривалось по 2-3 попытки на защиту, через ротацию ревьюеров из опытных разработчиков. 
 
+### Посмотреть (Desktop only)
+[React Burger](https://gasandm.github.io/react-burger/).
+
 ### Запуск проекта [npm]
 1. Клонируйте данный репозиторий к себе;
 2. Установите пакеты через команду `npm i`;
@@ -26,6 +29,5 @@ TypeScript, React.js (Сборка CRA), JS (ES6), Git, HTML5, CSS3 (CSS Modules
 * Cypress-тесты через `npm run cypress:open`.
 * Проект запускается в браузере по адресу: `http://localhost:3000`.
 
-### Либо просто посетите (only desktop)
-[React Burger](https://gasandm.github.io/react-burger/).
+
 
